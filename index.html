@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Registener</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <div id="ventanaEmergenteFondo"></div>
+    <div id="ventanaEmergente">
+        <div id="ventanaEmergente__contenido">
+            
+            <div id="ventanaEmergente__contenido__mensaje"></div>
+            <div id="ventanaEmergente__contenido__aceptar">
+                <button id="ventanaEmergente__contenido__aceptar__boton">Aceptar</button>
+            </div>
+            <div id="ventanaEmergente__contenido__rechazar">
+                <button id="ventanaEmergente__contenido__rechazar__boton">Rechazar</button>
+            </div>
+        </div>
+    </div>
+    <div id="ventanaEmergenteModificarProducto">
+        <div id="ventanaEmergenteModificarProducto__contenido">
+            <div id="ventanaEmergenteModificarProducto__contenido__fotoDescripcion">
+                Foto<div id="ventanaEmergenteModificarProducto__contenido__fotoDescripcion__foto"></div>
+                Descripcion<textarea id="ventanaEmergenteModificarProducto__contenido__fotoDescripcion__descripcion"></textarea>
+            </div>
+            <div id="ventanaEmergenteModificarProducto__contenido__caracteristicas">
+                Nombre<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__nombre">
+                Precio<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__precio">
+                Stock<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__stock">
+                ID<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__id">
+                Color<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__color">
+                Codigo de barra<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__codigoBarra">
+                Promocionable<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__promocionable">
+                Tipo<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__tipo">
+                Categoria<input class="ventanaEmergenteModificarProducto__contenido__caracteristicas__varios" id="ventanaEmergenteModificarProducto__contenido__caracteristicas__categoria">
+            </div>
+            <div id="ventanaEmergenteModificarProducto__contenido__AceptarRechazar">
+                <button id="ventanaEmergenteModificarProducto__contenido__AceptarRechazar__aceptar" class="ventanaEmergenteModificarProducto__contenido__AceptarRechazar__varios">Aceptar</button>
+                <button id="ventanaEmergenteModificarProducto__contenido__AceptarRechazar__rechazar" class="ventanaEmergenteModificarProducto__contenido__AceptarRechazar__varios">Rechazar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="barraLateral">
+        <div id="barraLateral_A" class="barraLateral__botones"><a href="#contenedorConfiguracionProductos">A</a></div>
+        <div id="barraLateral_B" class="barraLateral__botones"><a href="#seleccionProductos__tipo1">B</a></div>
+        <div id="barraLateral_C" class="barraLateral__botones"><a href="#seleccionProductos">C</a></div>
+        <div id="barraLateral_D" class="barraLateral__botones"><a href="#seleccionProductos">D</a></div>
+        <div id="barraLateral_E" class="barraLateral__botones"><a href="#seleccionProductos">E</a></div>
+    </div>
+    
+    <div id="contenedorConfiguracionProductos">
+    </div>
+
+    <div id="contenedorConfiguracionProductos__contenido">
+        <div class="tipo__categoria__producto">
+            <div>Nombre</div>
+            <div>Precio</div>
+            <div>Stock</div>
+            <div>ID</div>
+            <div>Seleccionado</div>
+        </div>
+        <button id="contenedorConfiguracionProductos__contenido__agregar">+</button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div id="seleccionProductos">
+        <div id="seleccionProductos__tipo1">Pastas rellenas</div>
+        <div>Pastas secas</div>
+        <div>Toppings</div>
+
+        <div id="seleccionPastasRellenas">
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+        </div>
+
+        <div id="seleccionPastasSecas">
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+        </div>
+        
+        <div id="seleccionProductosToppings">
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+            <div class="seleccionProducto">
+                <button class="seleccionSumarProducto"></button>
+                <button class="seleccionRestarProducto">-</button>
+                <div class="seleccionCantidad">0</div>
+                <div class="seleccionStock"></div>
+            </div>
+        </div>
+
+        <div>Extra</div>
+        <div id="seleccionExtra">
+            <input type="text" id="inputExtra" placeholder="Ingrese el monto extra">
+            <div class="botonSubir" id="botonSeleccionSubir">
+                <a  class="desplazamiento" href="#seleccionConfiguracionInicial">Subir</a>
+            </div>
+            <div class="botonBajar">
+                <a class="desplazamiento" href="#seccionCobro">Bajar</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="seccionCobro">
+        <div class="seccionCobro__titulo text">Resumen</div>
+        <div class="seccionCobro__titulo text">Modo de pago</div>
+        <div class="seccionCobro__titulo text">Modificacion</div>
+        <div id="seccionCobro__resumen"></div>
+        <div id="seccionCobro__metodopago"></div>
+        <div id="seccionCobro__modificacion"></div>
+        <div id="seccionCobro__pago">
+            <div id="seccionCobro__pago__div">
+                <div class="text" id="seccionCobro__pago__div__div">Pago 1 $</div>
+                <input class="text" id="seccionCobro__pago__div__input" placeholder="-">
+            </div>
+            <div id="seccionCobro__pago__div">
+                <div class="text" id="seccionCobro__pago__div__div">Pago 2 $</div>
+                <input class="text" id="seccionCobro__pago__div__input" placeholder="-">
+            </div>
+
+            <div class="seleccionCobro__item1 text">Vuelto        $</div>
+            <div class="seleccionCobro__item1 text">Total         $</div>
+        </div>
+        <div id="seccionCobro__total">
+            <input class="seleccionCobro__item1" id="seccionCobro__total__observacion">
+            <div class="seleccionCobro__item1"></div>
+            <button class="seleccionCobro__item1"></button>
+        </div>
+        <div id="seccionCobro__confirmar">
+            <div class="botonSubir">
+                <a  class="desplazamiento" href="#seleccionProductos">Subir</a>
+            </div>
+            <div class="botonBajar">
+                <a class="desplazamiento" href="#seccionCobro">Bajar</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
