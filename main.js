@@ -15,14 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Almacen abierto con exito");
             db = event.target.result;
             buscarTipos();
-            
         }
         peticionDB.onupgradeneeded = (event)=>{
             db = event.target.result;
             let productosDB = db.createObjectStore('productos',{keyPath: 'id'});
             //Crea indices de la base de datos
             productosDB.createIndex(`porTipo`,`tipo`,{unique: false});
-            productosDB.createIndex(`porCategoria`,`categoria`,{unique: false});
+            productosDB.createIndex(`porSeleccion`,`seleccionado`,{unique: false});
             console.log("Almacen creado con exito");
         }
     }
@@ -30,20 +29,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Busca los diferentes tipos existentes en la base de datos 
     function buscarTipos() {
-        
         //Se busca los diferentes "tipos" que hay en la base de datos
         let tiposEncontrados = []; //Crea un array para guardar todos los tipos encontrados
-
+        let vacio=true //Variable para verificar si la base de datos esta vacia
 
         let transaccion = db.transaction([`productos`],`readonly`);
         let productosdb = transaccion.objectStore(`productos`);
+
         let productosdbIndiceTipo = productosdb.index(`porTipo`);
-        try { //Maneja el error en caso de que no haya ningun producto para mostrar, por lo que le pide al usuario automaticamente que agrege uno
 
             let productosdbIndiceTipobusqueda = productosdbIndiceTipo.openCursor();
             productosdbIndiceTipobusqueda.onsuccess=(event)=>{
                 let resultado = event.target.result;
-                
                 if(resultado){//Busca en los resultado del almacen
                     let encontrado=false;
                     
@@ -55,16 +52,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     if(!encontrado){ //Si no se encontro lo agrega
                         tiposEncontrados.push(resultado.value.tipo); 
                     }
+                    vacio=false
                     resultado.continue()
                 }else{//LLega al ultimo resultado
+                    if(vacio){ventanaEmergenteModificarProducto();}
                     cargarTiposEncontrados(tiposEncontrados);
                 }
 
             }
-            productosdbIndiceTipobusqueda.onerror=()=>{ventanaEmergente();}
-        } catch (error) {
-            agregarProducto();
-        }
+            productosdbIndiceTipobusqueda.onerror=()=>{ventanaEmergenteModificarProducto();}
+
         cargarproductosdb(); //Carga los productos
     }
     
@@ -75,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let indiceViejo = document.getElementById(indiceIdViejo);
         let i=1;
         while(indiceViejo!==null){
+            
+            document.body.removeChild(indiceViejo);
             i++;
             indiceIdViejo=`contenedorConfiguracionProductos__tipo${i}Indice`;
             indiceViejo = document.getElementById(indiceIdViejo);
@@ -210,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 let seleccionado;
                 if(producto.categoria===categoriaSeleccionada){ //Verifica si el producto es de la misma categoria que se selecciono
 
-                    if (producto.seleccionado) { //Verifica que el producto este seleccionado previamente para agregarle la clase active
+                    if (producto.seleccionado==="true") { //Verifica que el producto este seleccionado previamente para agregarle la clase active
                         seleccionado = `<div id="${producto.id}" Seleccionado="${producto.seleccionado}" class="contenedorConfiguracionProductos__contenido__modificarBoton contenedorConfiguracionProductos__contenido__modificarBoton__seleccionadoActive">O</div>`
                     } else { //Si no esta seleccionado no le agrega la clase active
                         seleccionado = `<div id="${producto.id}" Seleccionado="${producto.seleccionado}" class="contenedorConfiguracionProductos__contenido__modificarBoton">O</div>`
@@ -283,53 +282,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }  
     }
-    
-    //Funcion del boton agregar elemento
-    function agregarProducto() {
-        //Le pregunta al usuario sobre el producto
-        let productoFoto = undefined // Funcionalidad para agregar en un futuro
-        let productoNombre = prompt("Ingrese el nombre del producto");
-        let productoId = prompt("Ingrese el ID del producto");
-        let productoPrecio = prompt("Ingrese el precio del producto");
-        let productoStock = prompt("Ingrese el stock del producto")
-        let productoTipo = tipoSeleccionado;
-        let productoCategoria = categoriaSeleccionada;
-        let productoColor = undefined // Funcionalidad para agregar en un futuro
-        let productoCodigoBarra = undefined // Funcionalidad para agregar en un futuro
-        let productoPromocionable = undefined // Funcionalidad para agregar en un futuro
-        let productoDescripcion = prompt("Ingrese una descripcion del producto");
-        let productoOrden = undefined // Funcionalidad para agregar en un futuro
-        let productoSeleccionado = true // Indica si el producto esta seleccionado para mostrarse en la parte de venta
-
-        productoNuevo={
-            foto: `${productoFoto}`,
-            nombre: `${productoNombre}`,
-            id: `${productoId}`,
-            precio: `${productoPrecio}`,
-            stock: `${productoStock}`,
-            tipo: `${productoTipo}`,
-            categoria: `${productoCategoria}`,
-            color:`${productoColor}`,
-            codigoBarra: `${productoCodigoBarra}`,
-            promocionable: `${productoPromocionable}`,
-            descripcion: `${productoDescripcion}`,
-            orden: `${productoOrden}`,
-            seleccionado: productoSeleccionado
-        }
-
-        //Agrega el producto a la base de datos
-        let transaccion = db.transaction([`productos`],`readwrite`);
-        let dbProductos = transaccion.objectStore(`productos`);
-        let respuesta = dbProductos.add(productoNuevo);
-
-        respuesta.onsuccess = ()=>{
-            console.log("Objeto agregado con exito");
-            cargarproductosdb(); //Una vez que se agrego el objeto a la base de datos, se actualiza el contenido
-        }
-        respuesta.onerror = ()=>{
-            console.log("No se pudo agregar el objeto")
-        }
-    }
 
     //Funcion para el boton de seleccionar productos para que aparezcan o no en la seccion de seleccion de productos
     function productosdbAlternarSeleccionarProducto(productoId) {
@@ -347,10 +299,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 let producto = resultado.value; //Contiene al objeto encontrado
 
                 if(producto.id===productoId){ //Si lo encuetra...
-                    if (producto.seleccionado) { //Y si estaba seleccionado...
-                        producto.seleccionado=false //Entonces lo alterna 
+                    if (producto.seleccionado==="true") { //Y si estaba seleccionado...
+                        producto.seleccionado="false" //Entonces lo alterna 
                     } else { // Y si no estaba seleccionado
-                        producto.seleccionado=true //Lo deja seleccionado
+                        producto.seleccionado="true" //Lo deja seleccionado
                     }
                     let actualizar = resultado.update(producto); //Actualiza la base de datos
                     actualizar.onsuccess=()=>{ //Si se pudo realizar el proceso
@@ -383,7 +335,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 let solicitud = productosdb.delete(productoId);
                 solicitud.onerror= ()=>{ventanaEmergente();}
                 buscarTipos();
-                cargarproductosdb();
             }
         })
     }
@@ -439,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     }
 
-    //Ventana emergente para modificar un producto de la base de datos
+    //Ventana emergente para modificar o agregar un producto de la base de datos
     function ventanaEmergenteModificarProducto(productoId) {
         let aceptar = document.getElementById("ventanaEmergenteModificarProducto__contenido__AceptarRechazar__aceptar");
         let rechazar = document.getElementById("ventanaEmergenteModificarProducto__contenido__AceptarRechazar__rechazar");
@@ -565,7 +516,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         promocionable: `${promocionable.value}`,
                         descripcion: `${descripcion.value}`,
                         orden: ``,
-                        seleccionado: true
+                        seleccionado: "true"
                     }
                     try{
                         let modificar = productosdb.put(productoNuevo); // Remplaza el producto en la base de datos o lo crea si no existe
@@ -593,43 +544,174 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
 
-    //Carga el area de seleccion de productos
 
-    const conjuntosProductos = document.querySelectorAll(".seleccionProducto"); //Crea un nodeList de todos los objetos que tengan como clase "seleccionProducto", es decir, todos los botones en el apartado de seleccion de productos
-
-    botonSeleccionSubir.addEventListener("click", function() { //Actualiza el stock del area de configuracion con el area de seleccion de productos
-
-        const conjuntosProductosArray = Array.from(conjuntosProductos); // Convierte el NodeList de los productos de la seleccion a un array
-        let i=0;
-
-        conjuntosConfiguracionProductos = document.querySelectorAll(".seleccionConfiguracionInicialRellenaProducto"); // Crea un nodeList de los elementos correspondientes a pastas rellenas que se ubican en la configuracion
-        conjuntosConfiguracionProductos.forEach(function(conjunto){ //Recorre los elementos de la configuracion
-            if(conjunto.querySelector(".agregarProducto").checked===true){ //Verifica que el elemento de la configuracion tenga la casilla chequeada
-                const stock = conjuntosProductosArray[i].querySelector(".seleccionStock").textContent; //Guarda el stock del elemento de la seleccion
-                conjunto.querySelector(".seleccionConfiguracionProductoStock").value = stock; // Actualiza el stock del elemento de la configuracion
-                i++;
-            }
-        })
-
-        i=12;
-        conjuntosConfiguracionProductos = document.querySelectorAll(".seleccionConfiguracionInicialSecaProducto"); // Actualiza el nodeList con la siguiente columna de elementos
-        conjuntosConfiguracionProductos.forEach(function(conjunto){ //Recorre los elementos de la configuracion
-            if(conjunto.querySelector(".agregarProducto").checked===true){ //Verifica que el elemento de la configuracion tenga la casilla chequeada
-                const stock = conjuntosProductosArray[i].querySelector(".seleccionStock").textContent; //Guarda el stock del elemento de la seleccion
-                conjunto.querySelector(".seleccionConfiguracionProductoStock").value = stock; // Actualiza el stock del elemento de la configuracion
-                i++;
-            }
-        })
-
-        i=24;
-        conjuntosConfiguracionProductos = document.querySelectorAll(".seleccionConfiguracionInicialToppingProducto"); // Actualiza el nodeList con la siguiente columna de elementos
-        conjuntosConfiguracionProductos.forEach(function(conjunto){ //Recorre los elementos de la configuracion
-            if(conjunto.querySelector(".agregarProducto").checked===true){ //Verifica que el elemento de la configuracion tenga la casilla chequeada
-                const stock = conjuntosProductosArray[i].querySelector(".seleccionStock").textContent; //Guarda el stock del elemento de la seleccion
-                conjunto.querySelector(".seleccionConfiguracionProductoStock").value = stock; // Actualiza el stock del elemento de la configuracion
-                i++;
-            }
-        })
-    })
+    //Carga y le da funciones a la barra lateral
+    document.getElementById("barraLateral_A__icono").addEventListener("click",()=>{
+        document.getElementById("contenedorConfiguracionProductos").scrollIntoView();
+    });
+    document.getElementById("barraLateral_A__nombre").addEventListener("click",()=>{
+        document.getElementById("contenedorConfiguracionProductos").scrollIntoView();
+    });
+    document.getElementById("barraLateral_B__icono").addEventListener("click",()=>{
+        document.getElementById("seleccionProductos").scrollIntoView();
+    });
+    document.getElementById("barraLateral_B__nombre").addEventListener("click",()=>{
+        document.getElementById("seleccionProductos").scrollIntoView();
+    });
+    document.getElementById("barraLateral_C__icono").addEventListener("click",()=>{
+        document.getElementById("seleccionExtra").scrollIntoView();
+    });
+    document.getElementById("barraLateral_C__nombre").addEventListener("click",()=>{
+        document.getElementById("seleccionExtra").scrollIntoView();
+    });
     
+
+
+
+
+
+
+    //Carga el area de seleccion de productos
+    document.getElementById("barraLateral_B__icono").onclick=()=>{
+        cargarSeleccionProductos();
+    }
+    document.getElementById("barraLateral_B__nombre").onclick=()=>{
+        cargarSeleccionProductos();
+    }
+    
+    //Carga la seccion de seleccion de productos, se ejecuta cada vez que se hace click sobre la barra lateral para desplazarse a este mismo
+    function cargarSeleccionProductos() {
+        let contenedorIndiceTipos = document.getElementById("seleccionProductos");
+        contenedorIndiceTipos.innerHTML=`` //Vacia la seccion por si habia elementos cargados previamente
+        buscarTiposSeleccionados().then(tiposSeleccionados=>{ //Primero busca los tipos que tengan almenos un producto seleccionado
+            let fragmento = document.createDocumentFragment();
+            let numeroTipo = 1;
+
+            tiposSeleccionados.forEach(tipo => { //Recorre los tipos seleccionados
+                let indiceTipo = document.createElement("div"); //Y crea un div para cada tipo
+                let titulo = document.createElement("div");
+                titulo.classList="seleccionProductos__indiceTitulo"
+                titulo.textContent=tipo;
+                indiceTipo.appendChild(titulo);
+                indiceTipo.classList="seleccionProductos__indice"
+                indiceTipo.id=`seleccionProductos__indiceTipo${numeroTipo}`
+                numeroTipo++;
+                buscarProductosSeleccionados(tipo).then(productosSeleccionados =>{ //Se busca los productos seleccionados que tiene ese tipo
+                    productosSeleccionados.forEach(producto => {
+                        let productoCreado = document.createElement("div");
+                        
+                        productoCreado.classList="seleccionProducto";
+                        productoCreado.innerHTML=`
+                        <button class="seleccionSumarProducto">${producto.nombre}</button>
+                        <button class="seleccionRestarProducto">-</button>
+                        <div class="seleccionCantidad">0</div>
+                        <div class="seleccionStock">${producto.stock}</div>
+                        `
+                        indiceTipo.appendChild(productoCreado); //Agrega el producto encontrado al contenedor del mismo tipo
+                    });
+                })
+                fragmento.appendChild(indiceTipo); //Agrega el tipo, con todos los productos que cumplen dicho tipo, al fragmento
+            });
+
+            contenedorIndiceTipos.appendChild(fragmento); //Agrega todos los elementos cargados al DOM
+            //A continuacion se les da las funciones a todos los botones
+            setTimeout(() => { //Se coloca un retraso para darle tiempo a que los elementos se carguen en el DOM
+                document.querySelectorAll(".seleccionProducto").forEach(conjuntoBotones => {
+                    let botones = conjuntoBotones.children
+                    let botonSumar = botones[0]
+                    let botonRestar = botones[1]
+                    let cantidad = botones[2]
+                    let stock = botones[3]
+
+                    botonSumar.addEventListener("click",()=>{
+                        cantidad.textContent++;
+                        stock.textContent--;
+                        console.log(cantidad.textContent<0)
+                        if(cantidad.textContent==0){
+                            cantidad.classList.remove("seleccionCantidad-active");
+                            cantidad.classList.remove("seleccionCantidad-active2");
+                        }else if(cantidad.textContent<0){
+                            cantidad.classList.remove("seleccionCantidad-active");
+                            cantidad.classList.remove("seleccionCantidad-active2");
+                            cantidad.classList.add("seleccionCantidad-active2");
+                        }else{
+                            cantidad.classList.add("seleccionCantidad-active");
+                            cantidad.classList.remove("seleccionCantidad-active2");
+                        }
+                    })
+                    botonRestar.addEventListener("click",()=>{
+                        cantidad.textContent--;
+                        stock.textContent++;
+                        console.log(cantidad.textContent<0)
+                        if(cantidad.textContent==0){
+                            cantidad.classList.remove("seleccionCantidad-active");
+                            cantidad.classList.remove("seleccionCantidad-active2");
+                        }else if(cantidad.textContent<0){
+                            cantidad.classList.remove("seleccionCantidad-active");
+                            cantidad.classList.add("seleccionCantidad-active2");
+                        }else{
+                            cantidad.classList.add("seleccionCantidad-active");
+                            cantidad.classList.remove("seleccionCantidad-active2");
+                        }
+                    })
+                });
+            }, 10);
+        })
+    }
+    
+
+    //Busca los tipos que tengan productos seleccionados
+    function buscarTiposSeleccionados() {
+        //Se busca los diferentes "tipos" que hay en la base de datos que esten seleccionados
+        return new Promise((resolve) => {
+            let tiposSeleccionadosEncontrados = []; //Crea un array para guardar todos los tipos encontrados
+    
+            let transaccion = db.transaction([`productos`],`readonly`); //Abre una transaccion
+            let almacen = transaccion.objectStore(`productos`); //Selecciona el almacen
+            let almacenFiltrado = almacen.index(`porSeleccion`).openCursor(IDBKeyRange.only("true")); //Selecciona el filtrado
+    
+            almacenFiltrado.onsuccess=(event)=>{ //El filtro se aplico con exito
+                let tiposSeleccionados = event.target.result;
+                if(tiposSeleccionados){ //Recorre el cursor 
+                    let tipoEncontrado=false; 
+                    tiposSeleccionadosEncontrados.forEach(tipoSeleccionado => { 
+                        if (tipoSeleccionado===tiposSeleccionados.value.tipo) {//Verifica si el tipo actual se encuentra en el array de tipos encontrados
+                            tipoEncontrado=true; //Si lo encuentra se deja constancia
+                        }
+                    });
+                    if(!tipoEncontrado){tiposSeleccionadosEncontrados.push(tiposSeleccionados.value.tipo);} //Si despues de recorrer el array de tipos encontrados no se encontro el tipo que se esta evaluando entonces lo agrega
+                    tiposSeleccionados.continue(); //Se sigue con el siguiente tipo
+                }else{ //Una vez que se termina de buscar...
+                    resolve(tiposSeleccionadosEncontrados);
+                }
+            }
+        })
+
+    }
+
+    //Funcion que se le pasa como parametro el "tipo" y busca los productos con ese "tipo" y que esten seleccionados para mostrarse
+    function buscarProductosSeleccionados(tipo) {
+        //Se busca los diferentes productos que esten seleccionados para un tipo especifico
+        return new Promise((resolve) => {
+            let productosSeleccionadosEncontrados = []; //Crea un array para guardar todos los productos encontrados
+    
+            let transaccion = db.transaction([`productos`],`readonly`); //Abre una transaccion
+            let almacen = transaccion.objectStore(`productos`); //Selecciona el almacen
+            let almacenFiltrado = almacen.index(`porTipo`).openCursor(IDBKeyRange.only(tipo)); //Selecciona el filtrado
+    
+            almacenFiltrado.onsuccess=(event)=>{ //El filtro se aplico con exito
+                let cursorProductosFiltrados = event.target.result;
+                if(cursorProductosFiltrados){ //Recorre el cursor  
+                    if(cursorProductosFiltrados.value.seleccionado==="true"){//Almacena el producto filtrado que este seleccionado
+                        productosSeleccionadosEncontrados.push(cursorProductosFiltrados.value); 
+                    }
+                    cursorProductosFiltrados.continue(); //Se sigue con el siguiente tipo
+                }else{ //Una vez que se termina de buscar...
+                    resolve(productosSeleccionadosEncontrados);
+                }
+            }
+        })
+
+        
+    }
 });
