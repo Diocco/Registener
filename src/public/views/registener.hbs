@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Registener</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    {{!-- Estilos de registener --}}
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/configuracion.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/registroVentas.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/registroCaja.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/seccionCaja.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/ventaPublico.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/seccionRegistros.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/seccionProductos.css'>
+
+    {{!-- Estilos de ventanas emergentes en registener --}}
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/modificarVenta.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/mensajeEmergente.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/modificarProducto.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/varianteProducto.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/ventanaEmergente.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/normalize.css'>
+    <script src="https://kit.fontawesome.com/d292c2d48e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    {{!-- Ventana negra para antes de cargar el tema de la aplicacion --}}
+    <div id="ventanaNegra"></div>
+
+    {{!-- Contenedor de carga inicial --}}
+    <div id="ventanaCarga" class="noActivo">
+        <div id="ventanaCarga__barraCarga-fondo">
+            <div id="ventanaCarga__barraCarga"></div>
+        </div>
+        <div id="ventanaCarga__texto"></div>
+    </div>
+
+    {{>  mensajeEmergente }}
+
+    {{!-- Fondo oscuro de la ventana emergente --}}
+    <div id="ventanaEmergenteFondo" class="noActivo">
+
+        {{!-- Ventana emergente que avisa o le hace una pregunta al usuario --}}
+        <div id="ventanaEmergente" class="noActivo">
+
+            <div id="ventanaEmergente__mensaje"></div>
+            <div id="ventanaEmergente__aceptar">
+                <button id="ventanaEmergente__aceptar__boton">Aceptar</button>
+            </div>
+            <div id="ventanaEmergente__rechazar">
+                <button id="ventanaEmergente__rechazar__boton">Rechazar</button>
+            </div>
+    
+        </div>
+
+        {{!-- Ventana emergente para modificar un producto --}}
+        <div id="ventana__modProd" class="noActivo">
+
+            <div id="ventana__modProd__fotoDescripcion">
+                <h4>Foto</h4>
+                <img id="ventana__modProd__fotoDescripcion__img" class="imagenProducto"></img>
+                <h4>Descripcion</h4>
+                <textarea id="ventana__modProd__fotoDescripcion__textarea" placeholder="Ingrese una descripcion"></textarea>
+            </div>
+
+            <form id="ventana__modProd__caracteristicas">
+                <h4 class="ventana__modProd-h4" >ID</h4>
+                <input  class="ventana__modProd__caracteristicas__input"  name="_id"       id="ventana__modProd__caracteristicas__input__id"           readonly>
+                <h4 class="ventana__modProd-h4" >Nombre</h4>
+                <input  class="ventana__modProd__caracteristicas__input"  name="nombre"    id="ventana__modProd__caracteristicas__input__nombre"     placeholder="Ingrese el nombre del producto"     >
+                <h4 class="ventana__modProd-h4" >Precio Unitario</h4>
+                <input  class="ventana__modProd__caracteristicas__input"  name="precio"    id="ventana__modProd__caracteristicas__input__precio"     placeholder="Ingrese el precio del producto"      type="number">
+                <h4 class="ventana__modProd-h4" >Marca</h4>
+                <input  class="ventana__modProd__caracteristicas__input"  name="marca"     id="ventana__modProd__caracteristicas__input__marca"      placeholder="Ingrese la marca del producto"    >
+                <h4 class="ventana__modProd-h4" >Modelo</h4>
+                <input  class="ventana__modProd__caracteristicas__input"  name="modelo"    id="ventana__modProd__caracteristicas__input__modelo"     placeholder="Ingrese el modelo del producto"     >
+                <h4 class="ventana__modProd-h4" >Categoria</h4>
+                <select class="ventana__modProd__caracteristicas__input" name="categoria"  id="ventana__modProd__caracteristicas__select__categoria"          >
+                    <option>BMX</option>
+                    <option>MTB</option>
+                    <option>Niños</option>
+                    <option>Accesorios</option>
+                    <option>Agregar Categoria</option>
+                </select>
+                <input  class="ventana__modProd__caracteristicas__input noActivo" name="categoria" placeholder="Ingrese una nueva categoria" id="ventana__modProd__caracteristicas__input__categoria">
+                <h4 class="ventana__modProd-h4" >Imagenes</h4>
+                <div    class="ventana__modProd__caracteristicas__input"                   id="ventana__modProd__caracteristicas__div-imagenes" ></div>
+            </form>
+
+            <div id="ventana__modProd__modVar">
+                <h4 class="ventana__modProd-h4" >Variantes</h4>
+                {{!-- Indice de categorias --}}
+                <div id="ventana__modProd__modVar__indice">
+                    <h5>SKU</h5>
+                    <h5>Color</h5>
+                    <h5>Talle</h5>
+                    <h5>Stock</h5>
+                </div>
+                <div id="ventana__modProd__modVar__variantes"></div>
+                <button id="ventana__modProd__modVar__agregarVariante" class="botonRegistener3" >Agregar Variante</button>
+            </div>
+
+            <div id="ventana__modProd__modEspecif">
+                <h4 class="ventana__modProd-h4" >Especficaciones</h4>
+                {{!-- Indice de categorias --}}
+                <div id="ventana__modProd__modEspecif__indice">
+                    <h5>Nombre</h5>
+                    <h5>Descripcion</h5>
+                </div>
+                <div id="ventana__modProd__modEspecif__especificaciones"></div>
+                <button id="ventana__modProd__modEspecif__button" class="botonRegistener3" >Agregar especificacion</button>
+            </div>
+
+            <div id="ventana__modProd__respuesta">
+                <button id="ventana__modProd__aceptar" class="botonRegistener3">Aceptar</button>
+                <button id="ventana__modProd__cancelar" class="botonRegistener3">Cancelar</button>
+            </div>
+        </div>
+
+        {{!-- Ventana emergente para visualizar o cargar una imagen de un producto --}}
+        <div id="ventana__cargarFoto" class="noActivo">
+            {{!-- Contenedor de la imagen --}}
+            <img id="ventana__cargarFoto-img" class="imagenProducto">
+            {{!-- Boton para eliminar la imagen actual --}}
+            <button id="ventana__cargarFoto-eliminar" class="boton__negativo botonRegistener3">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+            {{!-- Input para agregar una nueva imagen --}}
+            <input id="ventana__cargarFoto-input" class="botonRegistener1" type="file">
+            {{!-- Botones para guardar o volver --}}
+            <div>
+                {{!-- Boton para guardar la imagen --}}
+                <button id="ventana__cargarFoto-guardar" class="botonRegistener3">Guardar</button>
+                {{!-- Boton para volver --}}
+                <button id="ventana__cargarFoto-volver" class="botonRegistener3">Volver</button>
+            </div>
+        </div>
+
+        {{!-- Ventana emergente para modificar una compra--}}
+        <section id="modificarVenta" class="noActivo">
+            <form id="modificarVenta__form">
+                <h2 id="modificarVenta__h2">ID: 890as9d8089ads809das890das908</h2>
+                <h3 id="modificarVenta__h3">Estado: Exitoso</h3>
+                <div id="modificarVenta__infoGen">
+                    <h4 id="modificarVenta__infoGen__h4">Informacion general</h4>
+                    <h5    class="modificarVenta__infoGen__h5">Lugar de venta</h5>
+                    <h5    class="modificarVenta__infoGen__h5">Fecha de venta</h5>
+                    <input class="inputRegistener1" id="modificarVenta__infoGen__lugarVenta" name="lugarVenta" type="text" >
+                    <input class="inputRegistener1" id="modificarVenta__infoGen__fechaVenta" name="fechaVenta" type="datetime-local" >
+                    <h5    class="modificarVenta__infoGen__h5">Vendedor</h5>
+                    <h5    class="modificarVenta__infoGen__h5">Cliente</h5>
+                    <input class="inputRegistener1" id="modificarVenta__infoGen__vendedor" name="vendedor" type="text" >
+                    <input class="inputRegistener1 nodisponible" id="modificarVenta__infoGen__cliente" type="text" disabled>
+                    <h5    class="modificarVenta__infoGen__h5" id="modificarVenta__infoGen__observacion-h5">Observacion</h5>
+                    <textarea class="inputRegistener1" id="modificarVenta__infoGen__observacion" name="observacion" type="text" ></textarea>
+                </div>
+                <div>
+                    <h4>Carrito</h4>
+                    <div id="modificarVenta__carrito">
+                        <div id="modificarVenta__carrito__indice" class="modificarVenta__carrito__fila">
+                            <div>Nombre</div>
+                            <div class="modificarVenta__carrito__cantidad">Cantidad</div>
+                            <div class="modificarVenta__carrito__precio">Precio</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modificarVenta__infoPago">
+                    <h4 id="modificarVenta__infoPago__h4">Informacion de pago</h4>
+                    <h3 class="modificarVenta__infoPago__h3">Subtotal</h3>
+                    <div class="inputRegistener1" id="modificarVenta__infoPago__subtotal"></div>
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__descuentoNombre" name="descuentoNombre" type="text" placeholder="Nombre del descuento">
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__descuento" name="descuento" type="number" placeholder="$ 0">
+                    <h3 class="modificarVenta__infoPago__h3">Total</h3>
+                    <div class="inputRegistener1" id="modificarVenta__infoPago__total"></div>
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__metodo1" name="metodo1" type="text" placeholder="Metodo de pago 1">
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__pago1" name="pago1" type="number" placeholder="$ 0">
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__metodo2" name="metodo2" type="text" placeholder="Metodo de pago 2">
+                    <input class="inputRegistener1" id="modificarVenta__infoPago__pago2" name="pago2" type="number" placeholder="$ 0">
+                </div>
+                <div id="modificarVenta__contenedorModificaciones">
+                    <h4>Modificaciones</h4>
+                    <div id="modificarVenta__modificaciones">
+                        <div id="modificarVenta__modificaciones__indice" class="modificarVenta__modificaciones__fila">
+                            <div class="modificarVenta__modificaciones__fecha">Fecha</div>
+                            <div class="modificarVenta__modificaciones__usuario">Usuario</div>
+                            <div class="modificarVenta__modificaciones__modificacion">Modificacion</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modificarVenta__respuesta">
+                    <button id="modificarVenta__respuesta__guardar" type="submit" class="botonRegistener3">Guardar</button>
+                    <button id="modificarVenta__respuesta__salir" class="botonRegistener3">Salir</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <aside id="barraLateral">
+        <div id="barraLateral__iconos">
+            <button id="barraLateral_A__icono" class="botonRegistener3">
+                <i class="fa-solid fa-list"></i>
+            </button>
+            <button id="barraLateral_B__icono" class="botonRegistener3" >
+                <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+            <button id="barraLateral__caja" class="botonRegistener3">
+                <i class="fa-solid fa-cash-register"></i>
+            </button>
+            <button id="barraLateral_C__icono" class="botonRegistener3">
+                <i class="fa-solid fa-table-cells"></i>
+            </button>
+            <button id="barraLateral_D__icono" class="botonRegistener3 nodisponible" disabled>
+                <i class="fa-solid fa-chart-line"></i>
+            </button>
+            <button id="barraLateral_E__icono" class="botonRegistener3 nodisponible" disabled>
+                <i class="fa-solid fa-address-card"></i>
+            </button>
+            <button id="barraLateral_AA__icono" class="botonRegistener3">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+        <div id="barraLateral__nombres">
+            <div class="ayudaRegistener1">Productos</div>
+            <div class="ayudaRegistener1">Venta al publico</div>
+            <div class="ayudaRegistener1">Caja</div>
+            <div class="ayudaRegistener1">Registros</div>
+            <div class="ayudaRegistener1">Estadisticas</div>
+            <div class="ayudaRegistener1">Registro de empleados</div>
+            <div  class="ayudaRegistener1">Configuracion</div>
+        </div>
+    </aside>
+
+    {{!-- Contenedor general de categorias, indice y productos --}}
+    <section id="configProductos" class="contenedorRegistener1  noActivo">
+        <div id="configProductos-div" class="contenedorRegistener2">
+            {{!-- Contenedor de categorias --}}
+            <div id="configProductos__categorias" ></div>
+
+            {{!-- Indice de la tabla con los productos --}}
+            <div id="configProductos__indice" class="contenedorRegistener3 configProductos__producto">
+                <div>Nombre</div>
+                <div>Precio</div>
+                <div class="configProductos__producto-stock">Stock</div>
+                {{!-- Boton para agregar un producto --}}
+                <button id="configProductos__agregarProducto" class="botonRegistener3"> + </button>
+            </div>
+            
+            {{!-- Contenedor de productos --}}
+            <div id="configProductos__productos" ></div>
+        </div>
+    </section>
+
+    {{!-- Venta al publico --}}
+    <section id="seleccionProductos" class="contenedorRegistener1">
+        <div class="contenedorRegistener2" id="seleccionProductos__div-contenedorSeleccionarProductos">
+            <h2>Seleccionar Productos</h2>
+            <label>
+                Agrupar por categoria
+                <input type="checkbox"  id="seleccionProductos__botonAgruparCategorias" checked>
+            </label>
+            <label>
+                Agrupar por productos
+                <input type="checkbox"  id="seleccionProductos__botonSoloVariantes" checked>
+            </label>
+            <form id="seleccionProductos__form-buscarSKU"><input id="seleccionProductos__input-buscarSKU" class="inputRegistener1" placeholder="Buscar un SKU"></form>
+            <form id="seleccionProductos__form-buscar"><input id="seleccionProductos__input-buscar" class="inputRegistener1" placeholder="Buscar un producto"></form>
+            <div id="seleccionProductos__div-productos" ></div>
+            <div id="seleccionProductos__div-paginado" ></div>
+        </div>
+        <div class="contenedorRegistener2" id="seleccionProductos__div-productosFav">
+            <h2>Productos favoritos</h2>
+        </div>
+        <div class="contenedorRegistener2" id="seleccionProductos__div-resumen">
+            <h2>Resumen</h2>
+            <table id="seleccionProductos__div-resumen__table">
+                <thead>
+                    <tr>
+                        <th class="seleccionProductos__div-resumen__table__nombre">SKU</th>
+                        <th class="seleccionProductos__div-resumen__table__nombre">Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="seleccionProductos__div-resumen__total">
+                <div>Total</div>
+                <div >$ 0</div>
+            </div>
+        </div>
+        <div class="contenedorRegistener2" id="botonesVentaPublico">
+            <button class="botonRegistener2 nodisponible" id="botonIrSeleccionProductos"><i class="fa-solid fa-arrow-right-long"></i></button>
+            <button class="botonRegistener2" id="botonIrPago"><i class="fa-solid fa-arrow-right-long"></i></button>
+        </div>
+        <div class="contenedorRegistener2" id="seleccionProductos__div-pago">
+            <h2 id="seleccionProductos__div-pago__h2">Pago</h2>
+            <div id="div-pago__metodoPago">
+                <h4>Modo de pago</h4>   
+            </div>
+            <div id="div-pago__modificacion">
+                <h4>Modificacion</h4>
+                <input class="inputRegistener1" placeholder="Ingrese porcentaje de descuento" type="number"></input>
+                <button class="botonRegistener3">10% de descuento</button>
+                <button class="botonRegistener3">15% de descuento</button>
+                <button class="botonRegistener3">Sin cargo</button>
+            </div>
+            <div id="div-pago__div-total">
+                <h5>Pago 1</h5>
+                <h5>Pago 2</h5>
+                <input class="inputRegistener1"              id="div-pago__div-total__div-pago1" placeholder="Ingrese el monto">
+                <input class="inputRegistener1 nodisponible" id="div-pago__div-total__div-pago2" type="number" placeholder="Ingrese el monto" disabled>
+                <h5    class="div-pago__div-total__h5">Vuelto</h5>
+                <div   class="inputRegistener1"              id="div-pago__div-total__div-vuelto">$ 0</div>
+                <h5    class="div-pago__div-total__h5">Total</h5>
+                <div   class="inputRegistener1"              id="div-pago__div-total__div-total">$ 0</div>
+
+            </div>
+            <div id="div-pago__confirmar">
+                <textarea id="div-pago__confirmar__observacion" placeholder="Ingrese una observacion"></textarea>
+                <button id="div-pago__confirmar__boton" class="botonRegistener3 nodisponible">Confirmar</button>
+            </div>
+        </div>
+    </section>
+
+    {{!-- Control de caja --}}
+    <section id="seleccionCaja" class="contenedorRegistener1 noActivo">
+        <div id="seleccionCaja__contenedorGeneral">
+            <div class="contenedorRegistener2" id="seleccionCaja__contenedorSaldos">
+                <h2 class="seleccionCaja__h2">Caja</h3>
+                <div id="seccionCaja__estado">
+                    <h3>Estado:</h3> <h3 id="seccionCaja__estado-text" class="letra__enError">Inactivo</h3>
+                </div>
+                <button class="botonRegistener3 nodisponible" id="seccionCaja__movimientosCaja" disabled>Movimientos de caja</button>
+                <div id="seleccionCaja__tablaSaldos__encabezado" class="seleccionCaja__tablaSaldos__fila">
+                    <div class="seleccionCaja__tablaSaldos__metodo">Metodo</div>
+                    <div>Saldo inicial</div>
+                    <div>Saldo final</div>
+                    <div>Esperado</div>
+                    <div>Diferencia</div>
+                </div>
+                <div id="seleccionCaja__tablaSaldos"></div>
+            </div>
+            <div class="contenedorRegistener2" id="seleccionCaja__abrirCerrar">
+                <button class="botonRegistener3" id="seccionCaja__abrirCaja">Abrir caja</button>
+                <button class="botonRegistener3 nodisponible" id="seccionCaja__cerrarCaja" disabled>Cerrar caja</button>
+                <div id="seccionCaja__ultimoInicio" class="noActivo" >Ultimo inicio: 7/13/2024 15:00</div>
+                <div id="seccionCaja__ultimoCierre" class="noActivo" >Ultimo cierre: 7/13/2024 13:00</div>
+            </div>
+            <div class="contenedorRegistener2" id="seleccionCaja__cambiosCaja">
+                <h2       id="seleccionCaja__cambiosCaja__h2"      class="seleccionCaja__h2">Cambios de caja</h3>
+                <select   id="seleccionCaja__cambiosCaja__metodo"  class="inputRegistener1"></select>
+                <select   id="seleccionCaja__cambiosCaja__etiqueta"  class="inputRegistener1">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option>Ajuste de Inventario</option>
+                    <option>Reembolso</option>
+                    <option>Proveedor</option>
+                    <option>Materia Prima</option>
+                    <option>Venta</option>
+                    <option>Otro</option>
+                </select>
+                <input    id="seleccionCaja__cambiosCaja__monto"   class="inputRegistener1" placeholder="$ 0">
+                <textarea id="seleccionCaja__cambiosCaja__observacion" placeholder="Escribe una descripcion del cambio"></textarea>
+                <button   id="seleccionCaja__cambiosCaja__button" class="botonRegistener3 nodisponible" disabled>Confirmar</button>
+            </div>
+        </div>
+    </section>
+
+    {{!-- Ventana para seleccionar el registro que se quiere ver --}}
+    <section id="registros" class="contenedorRegistener1 noActivo">
+        <div class="contenedorRegistener2">
+            <div id="registros__botonVentas" class="registros__opcion">
+                <h2 class="registros__h2">Registro de ventas</h2>
+                <div class="registros__imagen"></div>
+            </div>
+            <div id="registros__botonArqueos" class="registros__opcion">
+                <h2 class="registros__h2">Registro de arqueos</h2>
+                <div class="registros__imagen"></div>
+            </div>
+
+        </div>
+    </section>
+
+    {{!-- Registro de ventas --}}
+    <section id="registroVentas" class="contenedorRegistener1 noActivo">
+        <div id="registroVentas__contenido">
+            <h2>Registro de ventas</h2>
+            <div id="registroVentas__filtros">
+                <h3 class="registroVentas__filtros__h3">Desde</h3>
+                <input class="inputRegistener1" id="registroVentas__filtros__fechaDesde" type="date" >
+                <h3 class="registroVentas__filtros__h3">Hasta</h3>
+                <input class="inputRegistener1" id="registroVentas__filtros__fechaHasta" type="date" >
+                <h3 class="registroVentas__filtros__h3">Cantidad</h3>
+                <select id="registroVentas__filtros__cantidad" class="inputRegistener1">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+            </div>
+            <div id="registroVentas__indiceTabla" class="registroVentas__fila">
+                <div id="registroVentas__indiceTabla__ID">ID</div>
+                <div id="registroVentas__indiceTabla__hora">Hora</div>
+                <div id="registroVentas__indiceTabla__total">Total</div>
+                <div id="registroVentas__indiceTabla__metodo">Metodo</div>
+                <div id="registroVentas__indiceTabla__etiqueta">Etiqueta</div>
+                <div id="registroVentas__indiceTabla__contenedorEstado">
+                    <div id="registroVentas__indiceTabla__estado">Estados<br>
+                        <div id="registroVentas__indiceTabla__estado__opciones" class="noActivo">
+                            <label class="estado__opciones__label" ><input id="estado__opciones__exitoso" type="checkbox" value="exitoso"> Exitoso</label>
+                            <label class="estado__opciones__label" ><input id="estado__opciones__modificado" type="checkbox" value="modificado"> Modificado</label>
+                            <label class="estado__opciones__label" ><input id="estado__opciones__anulado" type="checkbox" value="anulado"> Anulado</label>
+                        </div>
+                    </div>
+                    <div id="registroVentas__indiceTabla__estado-cantidad">(3)</div>
+                </div>
+                <div id="registroVentas__indiceTabla__observacion">Observaciones</div>
+            </div>
+            <div id="registroVentas__contenedorTabla"></div>
+            <div id="registroVentas__indice"></div>
+    </section>
+
+    {{!-- Registro de arqueo de caja --}}
+    <section id="registroCaja" class="contenedorRegistener1 noActivo">
+        <div id="registroCaja__contenedorRegistro" class="contenedorRegistener2">
+            <h2>Registro de arqueo de caja</h2>
+            <div id="registroCaja__filtros">
+                <div class="registroCaja__filtros-div">
+                    <h3>Desde</h3>
+                    <input class="inputRegistener1" id="registroCaja__filtros__fechaDesde" type="date" >
+                </div>
+                <div class="registroCaja__filtros-div">
+                    <h3>Hasta</h3>
+                    <input class="inputRegistener1" id="registroCaja__filtros__fechaHasta" type="date" >
+                </div>
+                <div class="registroCaja__filtros-div">
+                    <h3>Cantidad</h3>
+                    <select id="registroCaja__filtros__cantidad" class="inputRegistener1">
+                        <option>5</option>
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+                
+                
+                
+            </div>
+            <div id="registroCaja__indiceTabla" class="registroCaja__fila contenedorRegistener3">
+                <div id="registroCaja__indiceTabla__hora">Hora</div>
+                <div id="registroCaja__indiceTabla__metodo">Vendedor</div>
+                <div id="registroCaja__indiceTabla__total" class="registroCaja__fila__diferencia">Diferencia total</div>
+            </div>
+            <div id="registroCaja__contenedorTabla"></div>
+            <div id="registroCaja__indice"></div>
+        </div>
+        <div id="registroCaja__contenedorVisualizador" class="contenedorRegistener2">
+            <h2>Ver registro</h2>
+            <p id="registroCaja__contenedorVisualizador-mensaje">Seleccione un registro para verlo en detalle</p>
+            <div id="registroCaja__registro" class="noActivo">
+                <h4>Vendedor apertura</h4>
+                <h4>Fecha de apertura</h4>
+                <div class="registroCaja__registro-info" id="registroCaja__registro-vendedor1"></div>
+                <div class="registroCaja__registro-info" id="registroCaja__registro-fecha1"></div>
+                <h4>Vendedor cierre</h4>
+                <h4>Fecha de cierre</h4>
+                <div class="registroCaja__registro-info" id="registroCaja__registro-vendedor2"></div>
+                <div class="registroCaja__registro-info" id="registroCaja__registro-fecha2"></div>
+                <div id="registroCaja__registro-metodosPago">
+                    <h4>Metodos de pago</h4>
+                    <div id="registroCaja__registro-indice" class="contenedorRegistener3 registroCaja__registro-fila">
+                        <div class="registroCaja__registro-nombre" >Nombre</div>
+                        <div>Inicial</div>
+                        <div>Final</div>
+                        <div>Esperado</div>
+                        <div>Diferencia</div>
+                    </div>
+                    <div id="registroCaja__registro-metodosPago__tabla"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    {{!-- Configuracion --}}
+    <section id="configuracion" class="contenedorRegistener1 noActivo">
+        <div id="configuracion__global" class="contenedorRegistener2">
+            <h3 class="configuracion__h3">Preferencias</h3>
+            <h4 class="configuracion__h4">Tema</h4>
+            <select id="configuracion__global__select-tema" class="inputRegistener2">
+                <option>Escala de grises</option>
+                <option>Oscuro</option>
+                <option>Azul oscuro</option>
+                <option>Rojo chino</option>
+            </select>
+        </div>
+        {{!-- <div id="configuracion__ventaPublico" class="configuracion__div">
+            <h3 class="configuracion__h3">Venta al publico</h3>
+        </div> --}}
+        <div id="configuracion__caja" class="contenedorRegistener2">
+            <h3 class="configuracion__h3">Caja</h3>
+            <h4> Metodos de pago </h4>
+            <div id="configuracion__caja__metodos-encabezado" class="configuracion__caja__metodos-fila">
+                    <div>Nombre</div>
+                    <div>Tipo</div>
+            </div>
+            <div id="configuracion__caja__metodos"></div>
+            <button id="configuracion__caja__metodos-agregar" class="botonRegistener3">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </section> 
+
+
+
+
+
+
+
+
+
+    {{!-- General--}}
+    <script type="module" src="../../js/global.js"></script>
+    <script type='module' src="../js/registener/index.js"></script>
+    <script type='module' src="../js/registener/productos.js"></script>
+    <script type='module' src="../js/registener/configuracion.js"></script>
+    <script type='module' src="../js/registener/registroVentas.js"></script>
+
+    {{!-- Ventanas emergentes --}}
+    <script type='module' src="../js/registener/ventanasEmergentes/modificarFoto.js"></script>
+    <script type='module' src="../js/registener/ventanasEmergentes/modificarProducto.js"></script>
+    <script type='module' src="../js/registener/ventanasEmergentes/preguntar.js"></script>
+    <script type='module' src="../js/registener/ventanasEmergentes/modificarVenta.js"></script>
+
+    <script type='module' src="../js/helpers/mostrarMensaje.js"></script>
+
+</body>
+</html>

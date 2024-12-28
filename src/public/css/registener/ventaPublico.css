@@ -1,0 +1,295 @@
+
+
+/*SECCION DE PRODUCTOS*/
+/*Ventana, contenedor de todos los elementos*/
+#seleccionProductos{
+    display: grid;
+    grid-template-columns: 58% 42% 58%;
+    grid-template-rows: 40% 51% 9%;
+    flex-direction: column;
+    justify-content: start;
+    background-color: initial;
+    border: 0;
+    overflow: hidden;
+}
+/*Contenedor de la seccion que contiene el titulo, la barra de busqueda y los productos*/
+#seleccionProductos__div-contenedorSeleccionarProductos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden auto;
+    justify-content: space-between;
+    grid-row: 1 / 4;
+    align-content: flex-start;
+}
+
+
+
+
+/*Contenedor de los productos individuales*/
+#seleccionProductos__div-productos{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+/*Contenedores de productos*/
+.ventaPublico__div-producto{
+    display: grid;
+    grid-template-columns: 20px 430px 45px 45px 120px;
+    align-items: center;
+    font-size: 25px !important;
+}
+/*Contenedores de variantes*/
+.ventaPublico__div-variantes{
+    display: grid;
+    grid-template-columns: 40px 30px 50px 270px 60px 45px 45px 65px 65px;
+    align-items: center;
+    min-width: 670px;
+    border-bottom: 1px solid gray;
+    padding: 5px 0 0 15px;
+    font-size: 23px;
+    grid-column: 1 / end;
+    justify-items: center;
+}
+/*Contenedor de la variable completa, si el usuario prefiere visualizar solo variantes*/
+.ventaPublico__div-varianteCompleta,.ventaPublico__div-varianteFavorita{
+    display: grid;
+    grid-template-columns: 30px minmax(160px, 1fr) minmax(200px, 2fr) 40px 40px 45px 120px;
+    align-items: center;
+    padding: 0px 5px !important;
+    font-size: 23px;
+    text-align: center;
+    border-bottom: 1px #808080 solid;
+}
+.ventaPublico__div-varianteFavorita{
+    grid-template-columns: 30px minmax(200px, 100%) 40px 40px 120px;
+}
+
+/*Titulo de las categorias de los productos*/
+.div-productos__div-titulo{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--colorBotones);
+    cursor: pointer;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    width: 100%;
+    margin: 5px 0;
+}
+/*Boton de agregar a favorito una variante*/
+.botonAgregarVarianteFavorito{
+    order: -1;
+    background-color: transparent;
+    border: none;
+}
+.esVarianteFavorito{
+    color: goldenrod;
+}
+
+/*Color de la variante*/
+.div-productos__div-color{
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    border-radius: 20px;
+}   
+/*Precio de los productos*/
+.div-productos__div-precio{
+    text-align: end;
+}
+/*Form de los inputs de busqueda*/
+#seleccionProductos__form-buscar,#seleccionProductos__form-buscarSKU{
+    width: 49%;
+    margin-bottom:17px
+}
+
+/*Inputs de busqueda*/
+#seleccionProductos__input-buscar,#seleccionProductos__input-buscarSKU{
+    width: 100%;
+}
+
+/* Contenedor del paginado */
+#seleccionProductos__div-paginado{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+/*Contenedor de productos favoritos*/
+#seleccionProductos__div-productosFav{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    overflow-y: auto;
+    display: initial;
+}
+
+/*Contenedor del resumen del carrito*/
+#seleccionProductos__div-resumen{
+    display: grid;
+    grid-template-rows: min-content min-content 1fr;
+    grid-column: 2 / 3;
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow-y: auto;
+    align-items: end;
+}
+/*Tabla del resumen del carrito*/
+#seleccionProductos__div-resumen__table{
+    width: 100%;
+    text-align: end;
+}
+#seleccionProductos__div-resumen__table:nth-child(0),#seleccionProductos__div-resumen__table:nth-child(1){
+    font-size: 20px;
+}
+/*Precio total de carrito*/
+#seleccionProductos__div-resumen__total{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-size: 25px;
+    justify-content: space-between;
+}
+/*Primera columna en el carrito*/
+.seleccionProductos__div-resumen__table__nombre{
+    text-align: start;
+}
+/*Contenedor de botones*/
+#botonesVentaPublico{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 15px;
+    grid-column: 2 / 3;
+    background-color: initial;
+    padding: 0;
+}
+
+/*Boton para cargar la zona de seleccionar productos*/
+#botonIrSeleccionProductos{
+    transform: rotate(180deg);
+}
+/*Contenedor de la seccion de pago*/
+#seleccionProductos__div-pago{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: min-content 1fr min-content;
+    grid-column: 3 / 4;
+    grid-row: 1 / 4;
+}
+
+
+
+
+
+
+
+/*SECCION DE COBRO*/
+/*Titulo de la seccion*/
+#seleccionProductos__div-pago__h2{
+    grid-column: 1/3;
+}
+
+/*Contenedores de metodos de pago y de modificacion*/
+#div-pago__metodoPago,#div-pago__modificacion{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    font-size: 20px;
+    grid-row: 2/3;
+    overflow-y: auto;
+}
+/*Contenedor de observacion y confirmar*/
+#div-pago__confirmar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+/*Textarea de obervaciones*/
+#div-pago__confirmar__observacion{
+    margin: 10px; 
+    width: 100%;
+    overflow: auto;
+    text-align: start;
+    padding: 10px;
+    background-color: var(--colorVentana);
+    color: var(--colorLetra);
+    font-size: 20px;
+    resize: none;
+    border: solid black 1px;
+    border-radius: 10px;
+}
+/*Boton de confirmar*/
+#div-pago__confirmar__boton{
+    margin: auto; 
+    width: 300px;
+    font-size: 35px;
+}
+
+
+/*Promociones*/
+
+
+.div-pago__promociones__contenedores{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 370px;
+    background: var(--colorVentana);
+    font-size: 20px;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.div-pago__promociones__contenedores__titulo{
+    width: 230px;
+}
+.div-pago__promociones__contenedores__precio{
+    width: 100px;
+    text-align: end;
+}
+
+
+
+
+
+
+
+
+/*Contenedor de pagos, vuelto y total*/
+#div-pago__div-total{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(6,min-content);
+}
+/*Titulos de la seccion*/
+.div-pago__div-total__h5{
+    grid-column: 1/3;
+}
+/*Contenedores del vuelto y el total*/
+#div-pago__div-total__div-vuelto,#div-pago__div-total__div-total{
+    grid-column: 1 / 3;
+    font-size: 36px;
+    padding: 2px 7px;
+    text-align: end;
+}
+
+
+
+
+
+
+
+
+

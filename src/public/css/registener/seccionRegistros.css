@@ -1,0 +1,35 @@
+/* Contenedor de seccion*/
+#registros{
+    background: initial;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+/* Contenedor */
+.registros__opcion {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    background: var(--colorBotones);
+    border-radius: 10px;
+    margin: 15px;
+    justify-content: center;
+    box-shadow: 0 0 10px -2px black;
+    cursor: pointer;
+}
+
+
+/* Título */
+.registros__h2 {
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover del título */
+.registros__opcion:hover .registros__h2 {
+    transform: scale(1.1); /* Corre el título ligeramente a la derecha */
+}
+

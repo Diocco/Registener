@@ -1,0 +1,168 @@
+:root{
+    --tamaño-logo:50px;
+}
+
+/*Contenedor del mensaje para el usuario*/
+#contenedorMensajeUsuario{
+	display: none;
+	text-align: center;
+	width: 100vw;
+	transform: translateY(-30vh); 
+	position: fixed;
+    left: 0;
+    top: 10vh;
+	z-index: 10000;
+}
+
+/*Mensaje para el usuario*/
+#mensajeUsuario {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    height: 53px;
+    width: max-content;
+    max-width: 100%; 
+    padding: 5px;
+    color: white;
+    background-color: green;
+    border-radius: 30px;
+    align-items: center;
+    overflow: hidden;
+	margin: 0 auto;
+    animation: aparecer 10s;
+}
+
+.mensajeUsuario-animacionSinMensaje{
+    animation: aparecerSinMensaje 4s !important;
+}
+
+.contenedorMensajeUsuario-activo{
+	display: flex !important;
+}
+.mensajeUsuario-enError{
+	background-color: red !important;
+}
+
+@keyframes aparecer {
+    0% {
+        transform: translateY(-50vh); /* Fuera de la pantalla */
+        max-width: var(--tamaño-logo); /* Comienza estrecho */
+    }
+	/* Entra en pantalla */
+    10% {
+		max-width: var(--tamaño-logo); 
+        transform: translateY(30vh); 
+    }
+	/* Expande a tamaño completo */
+    25% {
+		transform: translateY(30vh);
+        max-width: 100%; 
+    }
+	/* Permanece estatico*/
+	75%{
+		transform: translateY(30vh); 
+        max-width: 100%; 
+	}
+	/* Se contrae */
+	90% {
+		transform: translateY(30vh); /* Entra en pantalla */
+        max-width: var(--tamaño-logo); /* Comienza estrecho */
+    }
+	/* Sale de la pantalla */
+	100% {
+		max-width: var(--tamaño-logo); /* Comienza estrecho */
+		transform: translateY(-50vh); /* Fuera de la pantalla */
+	}
+}
+
+@keyframes aparecerSinMensaje {
+    0% {
+        transform: translateY(-50vh); /* Fuera de la pantalla */
+        max-width: var(--tamaño-logo);
+    }
+	/* Entra en pantalla */
+    10% {
+        transform: translateY(30vh); 
+        max-width: var(--tamaño-logo);
+    }
+	/* Palpita */
+    15% {
+        transform: translateY(30vh) scale(1.2); 
+        max-width: var(--tamaño-logo);
+    }
+	/* Permanece estatico*/
+	20%{
+        transform: translateY(30vh) scale(1); 
+        max-width: var(--tamaño-logo);
+	}
+	/* Permanece quieto */
+	90% {
+        transform: translateY(30vh); 
+        max-width: var(--tamaño-logo);
+    }
+	/* Sale de la pantalla */
+	100% {
+		transform: translateY(-50vh); /* Fuera de la pantalla */
+        max-width: var(--tamaño-logo);
+	}
+}
+
+/*Iconos de error*/
+#mensajeUsuario__i,#mensajeUsuario__i-error{
+    border: 2px solid white;
+    margin-right: 5px;
+    padding-top: 2px;
+    border-radius: 100%;
+    font-size: 28px;
+    padding-top: 5px;
+    text-align: center;
+    min-height: 40px;
+    min-width: 40px;
+}
+/*Muestra o oculta el icono correspondiente*/
+.noActivo{
+	display: none !important;
+}
+
+#mensajeUsuario__p{
+	min-width: auto;
+    min-height: 35px;
+	padding: 9px;
+	white-space: nowrap;
+}
+
+
+/*Version de telefono*/
+@media screen and (max-width:1200px){
+
+    :root{
+        --tamaño-logo:98px;
+    }
+
+/*Mensaje para el usuario*/
+#mensajeUsuario {
+    left: 40vw;
+    font-size: 60px;
+    height: 106px;
+    padding: 10px;
+    border-radius: 60px;
+}
+
+
+/*Iconos de error*/
+#mensajeUsuario__i,#mensajeUsuario__i-error{
+    border: 4px solid white;
+    margin-right: 10px;
+    font-size: 56px;
+    padding-top: 10px;
+    min-height: 80px;
+    min-width: 80px;
+}
+/*Muestra o oculta el icono correspondiente*/
+#mensajeUsuario__p{
+	min-width: auto;
+    min-height: 70px;
+	padding: 18px;
+	white-space: nowrap;
+}
+}

@@ -1,0 +1,97 @@
+
+/*Contenido de la seccion*/
+#registroVentas__contenido{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Contenedor de filtros */
+#registroVentas__filtros{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+/* Titulos de filtros*/
+.registroVentas__filtros__h3{
+    margin: 0 10px
+}
+/* Contenedor del indice de estados de la venta*/
+#registroVentas__indiceTabla__contenedorEstado{
+    display: flex;
+}
+
+/* Contenedor de opciones del estado de la venta*/
+#registroVentas__indiceTabla__estado__opciones{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: var(--colorBotones);
+    padding: 10px;
+    transform: translateX(-10px);
+    border-radius: 5px;
+}
+
+/* Cantidad de estados activos en la busqueda de estados de la venta*/
+#registroVentas__indiceTabla__estado-cantidad{
+    margin-left: 5px;
+}
+/*Opcion*/
+.estado__opciones__label{
+    margin: 5px 0px;
+}
+
+/*Contenedor general de la tabla*/
+#registroVentas__contenedorTabla{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding-top: 1%;
+    overflow: auto auto;
+    color: var(--colorLetra);
+}
+
+
+/*Indice de la tabla*/
+#registroVentas__indiceTabla{
+    font-size: 19px;
+    height: 54px;
+    margin-top: 15px;
+}
+
+/*Mensaje en caso de no haber encontrado elementos para mostrar*/
+#registroVentas__mensajeSinElementos{
+    font-size: 50px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+/*Fila de la tabla*/
+.registroVentas__fila{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 205px 175px 125px 150px 110px 150px minmax(200px,10000px) 40px 40px;
+    padding: 0.25% 0.5%;
+}
+.registroVentas__fila:nth-child(odd) { /*Filas impares*/
+    background-color: var(--colorBotones);
+}
+.registroVentas__fila:nth-child(even) { /*Filas pares*/
+background-color: var(--colorBarraLateral);
+}
+.registroVentas__fila__observacion {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/*Indice de las paginas de los registros*/
+#registroVentas__indice{
+    width: 100%;
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+}
+

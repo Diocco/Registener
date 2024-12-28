@@ -1,0 +1,146 @@
+/*Ventana de modificar venta*/
+#modificarVenta__form{
+    width: 90vw;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(3, 33.33%);
+    grid-template-rows: 5% 55% 30% 10%;
+    border: 0;
+    border-radius: 1%;
+    background-color: var(--colorFondoVentana);
+    padding: 1%;
+}
+#modificarVenta__h3{ /*Titulo con el estado de la venta*/
+    grid-column: 2/4;
+    justify-self: end;
+}
+
+/*Contenedor de la informacion general de la venta*/
+#modificarVenta__infoGen{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(6, min-content);
+    padding-right: 1%;
+}
+#modificarVenta__infoGen__h4,#modificarVenta__infoGen__observacion-h5,#modificarVenta__infoGen__observacion{/*Titulo del contenedor*/
+    grid-column: 1 / 3;
+    max-height: 100%;
+    resize: none;
+}
+
+/*Contenedor del carrito de la venta*/
+#modificarVenta__carrito{
+    display: flex;
+    background-color: var(--colorVentana);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 2%;
+    padding: 2%;
+    height: 91%;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+/*Indice del carrito*/
+#modificarVenta__carrito__indice{
+    font-size: 20px;
+    margin-bottom: 2%;
+    border-bottom: 1px solid var(--colorLetra);
+}
+/*Fila del carrito*/
+.modificarVenta__carrito__fila {
+    display: grid;
+    grid-template-columns: 50% 25% 25%;
+}
+/*Casilla de la nombre*/
+.modificarVenta__carrito__nombre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px !important;
+    min-height: 22px !important;
+    max-height: 22px !important;
+    margin: 0px !important;
+}
+/*Casilla de la cantidad*/
+.modificarVenta__carrito__cantidad {
+    text-align: center;
+    padding: 0px !important;
+    min-height: 22px !important;
+    max-height: 22px !important;
+    margin: 0px !important;
+}
+/*Casilla del precio*/
+.modificarVenta__carrito__precio {
+    text-align: end;
+    padding: 0px !important;
+    min-height: 22px !important;
+    max-height: 22px !important;
+    margin: 0px !important;
+}
+
+/*Contenedor de la informacion de pago*/
+#modificarVenta__infoPago{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(7, min-content);
+    padding-left: 1%;
+}
+#modificarVenta__infoPago__h4,.modificarVenta__infoPago__h3{ /*Titulos del contenedor*/
+    grid-column: 1/3;
+}
+#modificarVenta__infoPago__subtotal,#modificarVenta__infoPago__total{ /*Contenedores del subtotal y total*/
+    grid-column: 1/3;
+    text-align: end;
+    padding: 0 10px;
+    font-size: 39px;
+}
+#modificarVenta__infoPago__descuento,#modificarVenta__infoPago__pago1,#modificarVenta__infoPago__pago2{
+    text-align: end;
+}
+
+
+
+/*Contenedor del historial de modificaciones*/
+#modificarVenta__contenedorModificaciones,#modificarVenta__respuesta{
+    grid-column: 1/4;
+}
+
+/*Historial de modificaciones*/
+#modificarVenta__modificaciones{
+    display: flex;
+    background-color: var(--colorVentana);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 5px;
+    padding: 7px;
+    height: 86%;
+    border-radius: 10px;
+    border: 1px solid black;
+    overflow-y: auto;
+}
+/*Indice del carrito*/
+#modificarVenta__modificaciones__indice{
+    font-size: 20px;
+    margin-bottom: 9px;
+    border-bottom: 1px solid var(--colorLetra);
+
+}
+/*Fila del carrito*/
+.modificarVenta__modificaciones__fila {
+    display: grid;
+    grid-template-columns: 300px 230px 1fr;
+}
+/*Mensaje de no hay registros para mostrar*/
+#modificarVenta__modificaciones__mensaje{
+    color: gray;
+    font-size: 30px;
+    width: max-content;
+    grid-auto-columns: center;
+    margin: auto;
+}
+
+/*Contenedores de los botones para guardar o descartar*/
+#modificarVenta__respuesta{
+    align-self: center;
+    justify-self: center;
+}

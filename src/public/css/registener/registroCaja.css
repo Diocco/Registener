@@ -1,0 +1,128 @@
+/* Contenedor de la seccion*/
+#registroCaja{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: initial;
+}
+
+/*Contenido de la seccion*/
+#registroCaja__contenedorRegistro{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 50px 35px 1fr;
+    justify-content: space-between;
+}
+
+/* Contenedor de filtros */
+#registroCaja__filtros{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+/* Titulos de filtros*/
+.registroCaja__filtros-div{
+    margin: 5px
+}
+
+/*Contenedor general de la tabla*/
+#registroCaja__contenedorTabla{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding-top: 1%;
+    overflow: hidden auto;
+    color: var(--colorLetra);
+}
+
+
+/*Indice de la tabla*/
+#registroCaja__indiceTabla{
+    background-color: initial;
+    color: var(--colorLetraTenue);
+    margin: 15px 0px 0px 0px;
+}
+
+/*Mensaje en caso de no haber encontrado elementos para mostrar*/
+#registroCaja__mensajeSinElementos{
+    font-size: 30px;
+    text-align: center;
+    width: 500px;
+    margin: 50px 0px;
+    color: var(--colorLetraTenue);
+    align-self: center;
+}
+
+/*Fila de la tabla*/
+.registroCaja__fila{
+    display: grid;
+    justify-items: start;
+    grid-template-columns: 210px 150px minmax(max-content,1fr);
+    padding: 0.25% 0.5%;
+    cursor: pointer;
+    background-color: var(--colorBotones)
+}
+.registroCaja__fila:hover{
+    filter: brightness(1.1);
+}
+
+.registroCaja__fila__diferencia {
+    justify-self: end;
+}
+
+/*Indice de las paginas de los registros*/
+#registroCaja__indice{
+    width: 100%;
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+}
+
+/***** Ver registro *****/
+
+/* Contenedor general para visualizar un registro */
+#registroCaja__contenedorVisualizador{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 40px;
+    align-items: start;
+    min-width: 600px;
+}
+
+#registroCaja__contenedorVisualizador-mensaje{
+    color: var(--colorLetraTenue);
+    font-size: 30px;
+    width: 350px;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+}
+
+#registroCaja__registro{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, min-content);
+}
+
+.registroCaja__registro-info{
+    margin-bottom: 20px;
+}
+
+/***** Tabla metodos de pago *****/
+
+#registroCaja__registro-metodosPago{
+    grid-column: 1/3;
+}
+#registroCaja__registro-indice{
+    color: var(--colorLetraTenue);
+    background-color: initial;
+}
+
+.registroCaja__registro-fila{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: end;
+}
+.registroCaja__registro-nombre{
+    justify-self: start;
+}

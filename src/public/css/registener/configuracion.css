@@ -1,0 +1,72 @@
+#configuracion{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: initial;
+}
+
+.configuracion__div{
+    border-top: 1px solid;
+    border-color: gray;
+    padding: 1%;
+    width: 80%;
+}
+
+.configuracion__h4{
+    padding-top: 1%
+}
+
+/* Opciones de la caja*/
+/* Contenedor de las opciones de caja*/
+#configuracion__caja{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+/* Titulo*/
+.configuracion__h3{
+    padding-bottom: 10px ;
+}
+
+/* Tabla de metodos de pago*/
+#configuracion__caja__metodos{
+    overflow-y: auto;
+    padding-right: 4px;
+}
+/* Encabezado de la tabla*/
+#configuracion__caja__metodos-encabezado{
+    color: gray;
+    background: initial;
+}
+
+/* Fila de la tabla de metodos de pago*/
+.configuracion__caja__metodos-fila{
+    width: min-content;
+    display: grid;
+    grid-template-columns: 150px 120px 45px;
+    font-size: 20px;
+    align-items: center;
+    background-color: var(--colorBotones);
+    border-radius: 20px;
+    padding: 0 20px;
+    margin: 3px 0px;
+}
+
+/* Boton para eliminar o confimar el metodo*/
+.configuracion__caja__metodos-eliminar,.configuracion__caja__metodos-confirmar{
+    margin: 0 !important;
+    transform: scale(0.8);
+}
+
+/* Boton para agregar metodo de pago*/
+#configuracion__caja__metodos-agregar{
+    align-self: center;
+}
+
+/* Texto de error */
+.configuracion__caja__metodos-textoError{
+    order: 50;
+    grid-column: 1 / 4;
+    font-size: 16px;
+}
