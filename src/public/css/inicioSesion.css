@@ -1,0 +1,185 @@
+
+
+#inicioSesion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000000;
+    background-color: var(--colorFondo);
+    color: var(--colorLetra);
+}
+
+
+#titulo{
+    font-size: 40px;
+}
+
+#pregunta{
+    font-size: 20px;
+    margin: 10px;
+}
+
+#inicioSesion__formulario__enviar{
+    width: 100%;
+}
+
+/*Distintas contenedores de ventanas, iniciar sesion, registrarse y registro exitoso*/
+#inicioSesion__formulario,#registrarse__formulario,#registrarse__exito{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--colorFondoVentana);
+    height: 530px;
+    width: min-content;
+    padding: 30px;
+    margin: 80px;
+    border-radius: 20px;
+
+}
+
+.iniciarSesion-boton,.iniciarSesion-input{
+    height: 45px;
+    width: 400px;
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 0px;
+    border-color: black;
+    transition: border-color 1s;
+    outline: none;
+    box-sizing: border-box;
+    background-color: var(--azul-logo);
+    color:var(--colorLetra);
+    cursor: pointer;
+}
+.iniciarSesion-input{
+    background-color: rgb(206, 206, 206);
+    color:var(--colorLetra-invertida);
+    cursor:initial
+}
+
+#inicioSesion__formulario__registrarse,#registrarse__formulario__registrarse{
+    width: 100%;
+    background-color: var(--colorLetra);
+    color: var(--colorLetra-invertida);
+}
+
+#otraOpcion{
+    font-size: 20px;
+    margin: 10px;
+}
+#volver{
+        width: 60px;
+        height: 60px;
+        align-self: start;
+        justify-self: start;
+        border-radius: 50px;
+        border: 0px;
+        margin: 10px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: white;
+        border-color: var(--azul-logo);
+        background-image: url(../img/icons/volver.png);
+        background-size: 60%;
+}
+
+.errorText{
+    min-height: 15px;
+    font-size: 15px;
+    color: red;
+    align-self: start;
+}
+
+#volverIniciarSesion{
+    color: #0000EE;   /* Azul predeterminado */
+    cursor: pointer;  /* El cursor cambia a una mano cuando se pasa por encima */
+}
+
+/*Logo "check" de la ventana de registro de sesion exitoso*/
+#registrarse__exito__i{
+    font-size: 200px;
+    text-align: center;
+    padding: 20px calc(20px + 12.5px);
+    color: white;
+    background-color: lightgreen;
+    border-radius: 120px;
+}
+/*Mensaje de registro exitoso*/
+#registrarse__exito__p{
+    margin: 30px;
+    font-size: 25px;
+}
+
+
+@media screen and (max-width:1000px){
+
+    #inicioSesion{
+        height: 80vh;
+    }
+
+    #inicioSesion__formulario, #registrarse__formulario{
+        display: none;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        background-color: white;
+        height: min-content;
+        width: min-content;
+        padding: 50px;
+        margin: 20px;
+        border-radius: 20px;
+    }
+    
+.inicioSesion__formulario__botones,.registrarse__formulario__botones{
+    height: 90px;
+    width: 600px;
+    margin-top: 0px;
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 20px;
+    border:0;
+    background-color: rgb(206, 206, 206);
+}
+
+#inicioSesion__formulario__enviar{
+    width: 100%;
+    margin-bottom: 40px;
+    border: 0;
+}
+
+#inicioSesion__formulario__registrarse{
+    background-color: var(--crema-logo);
+}
+
+#otraOpcion{
+    font-size: 40px;
+    margin: 20px;
+}
+#titulo{
+    font-size: 80px;
+    margin-bottom: 40px;
+}
+
+#pregunta{
+    font-size: 40px;
+    margin: 20px;
+}
+
+
+#volver{
+    width: 120px;
+    height: 120px;
+    position: absolute;
+}
+.errorText{
+    min-height: 70px;
+    font-size: 30px;
+}
+
+}

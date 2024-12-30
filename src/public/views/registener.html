@@ -5,7 +5,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Registener</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    {{!-- Estilos de registener --}}
+    <!-- Estilos de registener -->
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/configuracion.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/registroVentas.css'>
@@ -14,8 +14,9 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/ventaPublico.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/seccionRegistros.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/registener/seccionProductos.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/inicioSesion.css'>
 
-    {{!-- Estilos de ventanas emergentes en registener --}}
+    <!-- Estilos de ventanas emergentes en registener -->
     <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/modificarVenta.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/mensajeEmergente.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/mensajeEmergente/modificarProducto.css'>
@@ -26,10 +27,10 @@
 </head>
 <body>
 
-    {{!-- Ventana negra para antes de cargar el tema de la aplicacion --}}
+    <!-- Ventana negra para antes de cargar el tema de la aplicacion -->
     <div id="ventanaNegra"></div>
 
-    {{!-- Contenedor de carga inicial --}}
+    <!-- Contenedor de carga inicial -->
     <div id="ventanaCarga" class="noActivo">
         <div id="ventanaCarga__barraCarga-fondo">
             <div id="ventanaCarga__barraCarga"></div>
@@ -37,12 +38,57 @@
         <div id="ventanaCarga__texto"></div>
     </div>
 
-    {{>  mensajeEmergente }}
+    <!-- Ventana para el inicio de sesion -->
+    <div id="inicioSesion" class="noActivo">
+        <form id="inicioSesion__formulario" autocomplete="off">
+            <div id="titulo">Iniciar sesion</div>
+            <input required="" type="email"id="inicioSesion__formulario__ingresarCorreo" class="iniciarSesion-input " placeholder="Correo">
+            <div id="errorEmail" class="errorText"></div>
+            <input required="" type="Password" id="inicioSesion__formulario__ingresarPassword" class="iniciarSesion-input" placeholder="Contraseña">
+            <div id="errorPassword" class="errorText"></div>
+            <button id="inicioSesion__formulario__enviar" class="botonRegistener3" type="submit"> Enviar </button>
 
-    {{!-- Fondo oscuro de la ventana emergente --}}
+            <button id="inicioSesion__formulario__registrarse" class="botonRegistener3"> Registrarse </button>
+            <div id="pregunta">¿Olvidaste la contraseña?
+                <a href="recuperarPassword">Recuperar contraseña</a>
+            </div>
+        </form>
+        <form id="registrarse__formulario" class="noActivo" autocomplete="off">
+            <div id="titulo">Registrarse</div>
+            <input required="" id="registrarse__formulario__ingresarNombre" class="iniciarSesion-input" placeholder="Nombre completo">
+            <div id="errorNombreRegistro" class="errorText"></div>
+            <input required="" type="email" id="registrarse__formulario__ingresarCorreo" class="iniciarSesion-input" placeholder="Correo">
+            <div id="errorEmailRegistro" class="errorText"></div>
+            <input required="" type="Password" id="registrarse__formulario__ingresarPassword" class="iniciarSesion-input" placeholder="Contraseña">
+            <div id="errorPasswordRegistro" class="errorText"></div>
+            <input required="" type="Password" id="registrarse__formulario__repetirPassword" class="iniciarSesion-input" placeholder="Repetir contraseña">
+            <div id="errorRepetirPasswordRegistro" class="errorText"></div>
+            <button id="registrarse__formulario__enviar" class="botonRegistener3" type="submit"> Enviar </button>
+
+            <div id="pregunta">¿Ya tenes una cuenta?
+                <a id="volverIniciarSesion">Iniciar sesion</a>
+            </div>
+        </form>
+        <div id="registrarse__exito" class="noActivo">
+            <i id="registrarse__exito__i" class="fa-solid fa-check"></i>
+            <p id="registrarse__exito__p">Usuario registrado con exito</p>
+            <button class="botonRegistener3 botonVolver">Volver</button>
+        </div>
+    </div>
+
+    <!-- Mensaje emergente para algun error  -->
+    <div id="contenedorMensajeUsuario">
+        <div id="mensajeUsuario">
+            <i id="mensajeUsuario__i" class="fa-solid fa-check"></i>
+            <i id="mensajeUsuario__i-error" class="fa-solid fa-xmark noActivo"></i>
+            <p id="mensajeUsuario__p"></p>
+        </div>
+    </div>
+
+    <!-- Fondo oscuro de la ventana emergente -->
     <div id="ventanaEmergenteFondo" class="noActivo">
 
-        {{!-- Ventana emergente que avisa o le hace una pregunta al usuario --}}
+        <!-- Ventana emergente que avisa o le hace una pregunta al usuario -->
         <div id="ventanaEmergente" class="noActivo">
 
             <div id="ventanaEmergente__mensaje"></div>
@@ -55,7 +101,7 @@
     
         </div>
 
-        {{!-- Ventana emergente para modificar un producto --}}
+        <!-- Ventana emergente para modificar un producto -->
         <div id="ventana__modProd" class="noActivo">
 
             <div id="ventana__modProd__fotoDescripcion">
@@ -91,7 +137,7 @@
 
             <div id="ventana__modProd__modVar">
                 <h4 class="ventana__modProd-h4" >Variantes</h4>
-                {{!-- Indice de categorias --}}
+                <!-- Indice de categorias -->
                 <div id="ventana__modProd__modVar__indice">
                     <h5>SKU</h5>
                     <h5>Color</h5>
@@ -104,7 +150,7 @@
 
             <div id="ventana__modProd__modEspecif">
                 <h4 class="ventana__modProd-h4" >Especficaciones</h4>
-                {{!-- Indice de categorias --}}
+                <!-- Indice de categorias -->
                 <div id="ventana__modProd__modEspecif__indice">
                     <h5>Nombre</h5>
                     <h5>Descripcion</h5>
@@ -119,26 +165,26 @@
             </div>
         </div>
 
-        {{!-- Ventana emergente para visualizar o cargar una imagen de un producto --}}
+        <!-- Ventana emergente para visualizar o cargar una imagen de un producto -->
         <div id="ventana__cargarFoto" class="noActivo">
-            {{!-- Contenedor de la imagen --}}
+            <!-- Contenedor de la imagen -->
             <img id="ventana__cargarFoto-img" class="imagenProducto">
-            {{!-- Boton para eliminar la imagen actual --}}
+            <!-- Boton para eliminar la imagen actual -->
             <button id="ventana__cargarFoto-eliminar" class="boton__negativo botonRegistener3">
                 <i class="fa-solid fa-trash-can"></i>
             </button>
-            {{!-- Input para agregar una nueva imagen --}}
+            <!-- Input para agregar una nueva imagen -->
             <input id="ventana__cargarFoto-input" class="botonRegistener1" type="file">
-            {{!-- Botones para guardar o volver --}}
+            <!-- Botones para guardar o volver -->
             <div>
-                {{!-- Boton para guardar la imagen --}}
+                <!-- Boton para guardar la imagen -->
                 <button id="ventana__cargarFoto-guardar" class="botonRegistener3">Guardar</button>
-                {{!-- Boton para volver --}}
+                <!-- Boton para volver -->
                 <button id="ventana__cargarFoto-volver" class="botonRegistener3">Volver</button>
             </div>
         </div>
 
-        {{!-- Ventana emergente para modificar una compra--}}
+        <!-- Ventana emergente para modificar una compra-->
         <section id="modificarVenta" class="noActivo">
             <form id="modificarVenta__form">
                 <h2 id="modificarVenta__h2">ID: 890as9d8089ads809das890das908</h2>
@@ -232,27 +278,27 @@
         </div>
     </aside>
 
-    {{!-- Contenedor general de categorias, indice y productos --}}
+    <!-- Contenedor general de categorias, indice y productos -->
     <section id="configProductos" class="contenedorRegistener1  noActivo">
         <div id="configProductos-div" class="contenedorRegistener2">
-            {{!-- Contenedor de categorias --}}
+            <!-- Contenedor de categorias -->
             <div id="configProductos__categorias" ></div>
 
-            {{!-- Indice de la tabla con los productos --}}
+            <!-- Indice de la tabla con los productos -->
             <div id="configProductos__indice" class="contenedorRegistener3 configProductos__producto">
                 <div>Nombre</div>
                 <div>Precio</div>
                 <div class="configProductos__producto-stock">Stock</div>
-                {{!-- Boton para agregar un producto --}}
+                <!-- Boton para agregar un producto -->
                 <button id="configProductos__agregarProducto" class="botonRegistener3"> + </button>
             </div>
             
-            {{!-- Contenedor de productos --}}
+            <!-- Contenedor de productos -->
             <div id="configProductos__productos" ></div>
         </div>
     </section>
 
-    {{!-- Venta al publico --}}
+    <!-- Venta al publico -->
     <section id="seleccionProductos" class="contenedorRegistener1">
         <div class="contenedorRegistener2" id="seleccionProductos__div-contenedorSeleccionarProductos">
             <h2>Seleccionar Productos</h2>
@@ -324,7 +370,7 @@
         </div>
     </section>
 
-    {{!-- Control de caja --}}
+    <!-- Control de caja -->
     <section id="seleccionCaja" class="contenedorRegistener1 noActivo">
         <div id="seleccionCaja__contenedorGeneral">
             <div class="contenedorRegistener2" id="seleccionCaja__contenedorSaldos">
@@ -367,7 +413,7 @@
         </div>
     </section>
 
-    {{!-- Ventana para seleccionar el registro que se quiere ver --}}
+    <!--  Ventana para seleccionar el registro que se quiere ver --> 
     <section id="registros" class="contenedorRegistener1 noActivo">
         <div class="contenedorRegistener2">
             <div id="registros__botonVentas" class="registros__opcion">
@@ -382,7 +428,7 @@
         </div>
     </section>
 
-    {{!-- Registro de ventas --}}
+    <!-- Registro de ventas -->
     <section id="registroVentas" class="contenedorRegistener1 noActivo">
         <div id="registroVentas__contenido">
             <h2>Registro de ventas</h2>
@@ -422,7 +468,7 @@
             <div id="registroVentas__indice"></div>
     </section>
 
-    {{!-- Registro de arqueo de caja --}}
+    <!-- Registro de arqueo de caja -->
     <section id="registroCaja" class="contenedorRegistener1 noActivo">
         <div id="registroCaja__contenedorRegistro" class="contenedorRegistener2">
             <h2>Registro de arqueo de caja</h2>
@@ -485,7 +531,7 @@
         </div>
     </section>
 
-    {{!-- Configuracion --}}
+    <!-- Configuracion -->
     <section id="configuracion" class="contenedorRegistener1 noActivo">
         <div id="configuracion__global" class="contenedorRegistener2">
             <h3 class="configuracion__h3">Preferencias</h3>
@@ -497,9 +543,9 @@
                 <option>Rojo chino</option>
             </select>
         </div>
-        {{!-- <div id="configuracion__ventaPublico" class="configuracion__div">
+        <!-- <div id="configuracion__ventaPublico" class="configuracion__div">
             <h3 class="configuracion__h3">Venta al publico</h3>
-        </div> --}}
+        </div> -->
         <div id="configuracion__caja" class="contenedorRegistener2">
             <h3 class="configuracion__h3">Caja</h3>
             <h4> Metodos de pago </h4>
@@ -522,14 +568,15 @@
 
 
 
-    {{!-- General--}}
+    <!-- General-->
     <script type="module" src="../../js/global.js"></script>
     <script type='module' src="../js/registener/index.js"></script>
     <script type='module' src="../js/registener/productos.js"></script>
     <script type='module' src="../js/registener/configuracion.js"></script>
     <script type='module' src="../js/registener/registroVentas.js"></script>
+    <script type='module' src="../js/iniciarSesion.js"></script>
 
-    {{!-- Ventanas emergentes --}}
+    <!-- Ventanas emergentes -->
     <script type='module' src="../js/registener/ventanasEmergentes/modificarFoto.js"></script>
     <script type='module' src="../js/registener/ventanasEmergentes/modificarProducto.js"></script>
     <script type='module' src="../js/registener/ventanasEmergentes/preguntar.js"></script>

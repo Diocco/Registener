@@ -97,9 +97,6 @@ function botonesSeccionProductos(productos:producto[]) {
 }
 
 
-
-
-
 const cargarBotonesBarraLateral=()=>{
     //Carga y le da funciones a la barra lateral
     const configuracionProductosVentana = document.getElementById("configProductos")!
@@ -160,8 +157,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     // Si no se inicio sesion reedirije al usuario a la pagina de inicio de sesion
     if(!usuarioInformacion) {
-        localStorage.setItem('mostrarMensajeError',"Inicia sesion primero") // Define un mensaje de error para que sea mostrado al usuario una vez que carge la pagina a la que se redirige
-        window.location.assign(url+'/inicioSesion') // Redirije al usuario al inicio de sesion
+        document.getElementById('ventanaCarga')!.classList.add('ventanaCarga-desaparecer')
+        setTimeout(() => {
+            document.getElementById('ventanaCarga')!.classList.add('noActivo')
+        }, 500);
+        document.getElementById('inicioSesion')!.classList.remove('noActivo') // Activa la ventana de inicio de sesion
         return
     }
 

@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url'
 import 'dotenv/config';
-import hbs from 'hbs';
 import cors from 'cors'
 
 // Directorio
@@ -14,11 +13,12 @@ import  conexionDB  from '../routes/conexionConServidor.js'
 
 // Controladores
 import { 
-    cargarRegistener
+    cargarRegistener,
     } from '../controllers/archivos.js';
 
 // Rutas
 import usuariosRoutes from '../routes/usuarios.js';
+import authRoutes from '../routes/auth.js'; 
 import metodosPagoRoutes from '../routes/metodosPago.js'; 
 import categoriasRoutes from '../routes/categorias.js'; 
 import productosRoutes from '../routes/productos.js'; 
@@ -75,15 +75,6 @@ class Server {
         // Servir archivos estáticos
         this.app.use(express.static(path.resolve(__dirname, '../../src/public')));
 
-        // Configurar motor de vistas Handlebars
-        this.app.set('view engine', 'hbs');
-
-        // Configurar la carpeta de vistas
-        this.app.set('views', path.resolve(__dirname, '../public/views')); 
-
-        // Registrar parciales de Handlebars
-        hbs.registerPartials(path.resolve(__dirname, '../public/views/partials'));
-
         // Parseo de JSON
         this.app.use(express.json());
 
@@ -97,6 +88,7 @@ class Server {
         // API
         this.app.use(this.conexionConServidor,conexionDB)
         this.app.use(this.usuariosPath, usuariosRoutes);
+        this.app.use(this.authPath, authRoutes);
         this.app.use(this.categoriasPath, categoriasRoutes);
         this.app.use(this.metodoPagoPath, metodosPagoRoutes);
         this.app.use(this.productosPath, productosRoutes);
@@ -105,7 +97,7 @@ class Server {
         this.app.use(this.registroCajaPath, registroCajaRoutes);
         
         // HTML
-        this.app.get('/', cargarRegistener); // Configura la ruta
+        this.app.get('*', cargarRegistener); // Configura la ruta
     }
 
     // Inicia el servidor
