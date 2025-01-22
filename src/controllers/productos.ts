@@ -297,7 +297,7 @@ const actualizarProducto = async(req: Request, res: Response)=>{
         })
     } catch (error) {
         const errors:error[]=[{
-            msg: "Error al autenticar el usuario",
+            msg: "Error al autenticar el usuario - Actualizar producto",
             path: "Servidor",
             value: (error as Error).message
         }]

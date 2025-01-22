@@ -25,7 +25,7 @@ export const obtenerUsuarioVerificado = async (tokenAcceso:string)=>{
 }
 
 export const solicitudIniciarSesion =async(correo:string,password:string)=>{
-
+    console.log("intenta iniciar sesion")
     const data={ // Define los parametros inputs por el usuario para enviarlos al servidor
         correo,
         password
@@ -38,22 +38,28 @@ export const solicitudIniciarSesion =async(correo:string,password:string)=>{
         errors: [],
         token: ""
     }
+    try {
+        await fetch(urlInicioSesion, { // Realiza el post
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data) // Convertir los datos a JSON
+        })
+    
+        .then(response => response.json()) // Parsear la respuesta como JSON
+        .then(data=> { // Si todo sale bien se maneja la respuesta del servidor
+            if(data.errors) respuesta.errors=data.errors
+            else respuesta.token = data.token
+        })
+        .catch(error => { // Si hay un error se manejan 
+            mostrarMensaje('2',true);
+            console.error(error);
+        })
+    } catch (error) {
+        console.log(error)
+        console.error(error)
+    }
+    
 
-    await fetch(urlInicioSesion, { // Realiza el post
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data) // Convertir los datos a JSON
-    })
-
-    .then(response => response.json()) // Parsear la respuesta como JSON
-    .then(data=> { // Si todo sale bien se maneja la respuesta del servidor
-        if(data.errors) respuesta.errors=data.errors
-        else respuesta.token = data.token
-    })
-    .catch(error => { // Si hay un error se manejan 
-        mostrarMensaje('2',true);
-        console.error(error);
-    })
     return respuesta
 }
 

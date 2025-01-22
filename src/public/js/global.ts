@@ -45,8 +45,9 @@ if(tokenAcceso){ // Si el token existe entonces quiere decir que el usuario tien
     if(!usuarioVerificado) {
         localStorage.setItem('mostrarMensajeError',"La sesion ha caducado") // Define un mensaje de error para que sea mostrado al usuario una vez que carge la pagina a la que se redirige
         localStorage.removeItem('tokenAcceso') // Elimina el token de acceso con problemas
-        window.location.assign(url+'/inicioSesion') // Redirije al usuario al inicio de sesion
     }
+}else{
+    usuarioVerificado = new Promise((resolve)=>{resolve(undefined)})
 }
 
 export const mostrarErroresConsola =(errores:error[])=>{

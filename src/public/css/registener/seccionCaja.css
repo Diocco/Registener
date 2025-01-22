@@ -9,7 +9,7 @@
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 625px;
+    grid-template-columns: minMax(300px,5000px) minMax(300px,635px);
     grid-template-rows: 1fr 271px;
     justify-items: center;
     align-items: center;
@@ -61,7 +61,7 @@
 .seleccionCaja__tablaSaldos__fila{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: minMax(100px,2000px) minMax(100px,200px) minMax(100px,200px) minMax(150px,250px) minMax(150px,250px);
     justify-items: end;
     font-size: 20px;
     align-items: center;
@@ -96,14 +96,16 @@
 /* Contenedor de los botones para abrir y cerrar la caja */
 #seleccionCaja__abrirCerrar{
     display: grid;
+    width: 100%;
     grid-template-columns: 50% 50%;
     grid-template-rows: 50% 50%;
-    width: 650px;
-    height: 170px;
     background-color: initial;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
     justify-items: center;
 }
+
 
 /* Botones para abrir o cerrar la caja*/
 #seccionCaja__abrirCaja, #seccionCaja__cerrarCaja{
@@ -120,11 +122,18 @@
     border-radius: 16px;
     font-size: 20px;
 }
+/* Estilos para pantallas pequeñas (hasta 480px de ancho) */
+@media screen and (max-width: 1750px) {
+    #seccionCaja__ultimoCierre, #seccionCaja__ultimoInicio{
+        width: 190px;
+        text-align: center;
+    }
+}
 
 /* Contenedor de cambios de caja*/
 #seleccionCaja__cambiosCaja{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: minMax(200px,5000px) minMax(100px,5000px);
     grid-template-rows: 30px 50px 50px 50px 62px;
     justify-items: center;
     align-items: center;
@@ -171,4 +180,5 @@
     width: 250px;
     grid-column: 1 / 3;
 }
+
 

@@ -495,7 +495,7 @@ const cargarVariantesVentaDOM =(productos:producto[],nombreCategorias:string[],e
                     indiceHTML.classList.add('noActivo')
                     indiceHTML.innerHTML=`
                     <div></div>
-                    <div>SKU</div>
+                    <h5 class="ventana__modProd__modVar__indice__SKU">SKU</h5>
                     <div>Nombre</div>
                     <div></div>
                     <i class="fa-solid fa-cart-shopping" title="Cantidad seleccionada"></i>
@@ -518,7 +518,7 @@ const cargarVariantesVentaDOM =(productos:producto[],nombreCategorias:string[],e
             indiceHTML.classList.add('ventaPublico__div-varianteCompleta')
             indiceHTML.innerHTML=`
             <div></div>
-            <div>SKU</div>
+            <h5 class="ventana__modProd__modVar__indice__SKU">SKU</h5>
             <div>Nombre</div>
             <div></div>
             <i class="fa-solid fa-cart-shopping" title="Cantidad seleccionada"></i>
@@ -544,7 +544,7 @@ const cargarVariantesVentaDOM =(productos:producto[],nombreCategorias:string[],e
                     indiceHTML.classList.add('noActivo')
                     indiceHTML.innerHTML=`
                     <div></div>
-                    <div>SKU</div>
+                    <h5 class="ventana__modProd__modVar__indice__SKU">SKU</h5>
                     <div>Nombre</div>
                     <div></div>
                     <i class="fa-solid fa-cart-shopping" title="Cantidad seleccionada"></i>
@@ -730,7 +730,7 @@ const crearVariantesDOM=(productos:producto[],nombreCategorias:string[],producto
         productoInformacionDIV.classList.add('botonRegistener3')
         productoInformacionDIV.innerHTML=`
         <i class="fa-solid fa-bars"></i>
-        <div>${producto.nombre}</div>
+        <div class="div-productos__div-nombre">${producto.nombre}</div>
         <div class="div-productos__div-cantidad" >${carrito1.verCantidadProducto(producto)!.toString()}</div>
         <div>${stockTotal}</div>
         <div class="div-productos__div-precio" >$ ${(Number(producto.precio)).toLocaleString('es-AR')}</div>
@@ -746,7 +746,7 @@ const crearVariantesDOM=(productos:producto[],nombreCategorias:string[],producto
         <div></div>
         <i class="fa-solid fa-palette"></i>
         <i class="fa-solid fa-ruler-horizontal"></i>
-        <div>SKU</div>
+        <h5 class="ventana__modProd__modVar__indice__SKU">SKU</h5>
         <i class="fa-solid fa-cart-shopping" title="Cantidad seleccionada"></i>
         <i class="fa-solid fa-boxes-stacked" title="Stock"></i>
         `;

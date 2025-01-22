@@ -14,17 +14,20 @@
 }
 /*Contenedor de la seccion que contiene el titulo, la barra de busqueda y los productos*/
 #seleccionProductos__div-contenedorSeleccionarProductos{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 50% 50%;
     overflow: hidden auto;
     justify-content: space-between;
     grid-row: 1 / 4;
     align-content: flex-start;
 }
 
-
-
+/* Contenedor de los checkbox*/
+#seleccionProductos__div-checkboxs{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
 
 /*Contenedor de los productos individuales*/
 #seleccionProductos__div-productos{
@@ -32,26 +35,36 @@
     flex-direction: column;
     flex-wrap: nowrap;
     width: 100%;
+    grid-column: 1/3;
 }
 
 /*Contenedores de productos*/
 .ventaPublico__div-producto{
     display: grid;
-    grid-template-columns: 20px 430px 45px 45px 120px;
+    grid-template-columns: 20px minmax(100px, 400px) 45px 45px 120px;
     align-items: center;
     font-size: 25px !important;
+    white-space: nowrap;
 }
+
+/* Titulo de los productos */
+.div-productos__div-nombre{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+}
+
 /*Contenedores de variantes*/
 .ventaPublico__div-variantes{
     display: grid;
-    grid-template-columns: 40px 30px 50px 270px 60px 45px 45px 65px 65px;
+    grid-template-columns: 40px 30px 50px minMax(150px, 2000px) 60px 45px minMax(0px, 500px) 45px 45px;
     align-items: center;
-    min-width: 670px;
     border-bottom: 1px solid gray;
     padding: 5px 0 0 15px;
     font-size: 23px;
     grid-column: 1 / end;
     justify-items: center;
+    padding-right: 20px;
 }
 /*Contenedor de la variable completa, si el usuario prefiere visualizar solo variantes*/
 .ventaPublico__div-varianteCompleta,.ventaPublico__div-varianteFavorita{
@@ -101,11 +114,6 @@
 .div-productos__div-precio{
     text-align: end;
 }
-/*Form de los inputs de busqueda*/
-#seleccionProductos__form-buscar,#seleccionProductos__form-buscarSKU{
-    width: 49%;
-    margin-bottom:17px
-}
 
 /*Inputs de busqueda*/
 #seleccionProductos__input-buscar,#seleccionProductos__input-buscarSKU{
@@ -117,6 +125,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    grid-column: 1/3;
 }
 
 /*Contenedor de productos favoritos*/
@@ -227,7 +236,7 @@
 /*Boton de confirmar*/
 #div-pago__confirmar__boton{
     margin: auto; 
-    width: 300px;
+    width: 95%;
     font-size: 35px;
 }
 
@@ -286,7 +295,14 @@
 }
 
 
-
+@media screen and (max-width: 1250px) {
+    .ventaPublico__div-varianteCompleta{
+        grid-template-columns: 30px 0px minmax(200px, 2fr) 40px 40px 45px 120px;
+    }
+    .ventana__modProd__modVar__indice__SKU{
+        overflow: hidden;
+    }
+}
 
 
 

@@ -37,7 +37,7 @@ const login = async(req: Request, res: Response) => {
             path: "Servidor",
             value: (error as Error).message
         }]
-        return res.status(500).json(errors)
+        return res.status(500).json({ message: 'Hubo un error en el servidor', error});
     }
     
 

@@ -8,7 +8,7 @@ import { agregarProductosDOM, alternarDisponibilidadProducto } from "./productos
 import { cargarVentanaModificarProducto, ventanaEmergenteModificarProducto } from "./ventanasEmergentes/modificarProducto.js"
 import { preguntar } from "./ventanasEmergentes/preguntar.js"
 
-import { url, usuarioVerificado } from "../global.js"
+import { tokenAcceso, url, usuarioVerificado } from "../global.js"
 import { usuario } from "../../../models/interfaces/usuario.js"
 import { cargarBotonesVentaPublico, cargarVentaPublico } from "./ventaPublico.js"
 import { cargarRegistrosVentaDOM } from "./registroVentas.js"
@@ -131,7 +131,13 @@ const cargarBotonesBarraLateral=()=>{
     });
 }
 
-
+const activarVentanaIniciarSesion=()=>{
+    document.getElementById('ventanaCarga')!.classList.add('ventanaCarga-desaparecer')
+    setTimeout(() => {
+        document.getElementById('ventanaCarga')!.classList.add('noActivo')
+    }, 500);
+    document.getElementById('inicioSesion')!.classList.remove('noActivo') // Activa la ventana de inicio de sesion
+}
 
 
 
@@ -143,27 +149,37 @@ document.addEventListener("DOMContentLoaded", async function() {
     const contenedorOpcionesCategorias = document.getElementById('ventana__modProd__caracteristicas__select__categoria')! as HTMLSelectElement
     const textoErrorCarga = document.getElementById('ventanaCarga__texto')!
 
+    let esConexionExitosa:boolean = await conexionConServidor() // Conecta con la base de datos
+    // Si la conexion es exitosa y el usuario que inicio sesion es admin entonces retira la ventana de carga
+    if(!esConexionExitosa){
+        textoErrorCarga.textContent='Error al cargar. Porfavor reinicie'
+        console.error("Error al conectar con la base de datos")
+        return
+    }
 
-    let esConexionExitosa:boolean
+    // Si no existe un toquen de acceso entonces envia al usuario al inicio de sesion
+    if(!tokenAcceso) { 
+        activarVentanaIniciarSesion()
+        console.log("No hay token")
+        return
+    }
 
-    [usuarioInformacion,,categorias,,esConexionExitosa,metodosPago] = await Promise.all([
-        usuarioVerificado,
+    // Verifica que el token sea valido
+    usuarioInformacion = await usuarioVerificado
+
+    // Si hubo un error en el inicio de sesion envia al usuario al inicio de sesion
+    if(!usuarioInformacion) {
+        activarVentanaIniciarSesion()
+        return
+    }
+
+    [,categorias,metodosPago] = await Promise.all([
         buscarCargarProductos(), // Busca y carga los productos
         buscarCargarCategorias(contenedorCategorias,contenedorOpcionesCategorias), // Busca y carga las categorias
-        cargarBotonesBarraLateral(),
-        conexionConServidor(),
         solicitudObtenerMetodosPago()
     ])
 
-    // Si no se inicio sesion reedirije al usuario a la pagina de inicio de sesion
-    if(!usuarioInformacion) {
-        document.getElementById('ventanaCarga')!.classList.add('ventanaCarga-desaparecer')
-        setTimeout(() => {
-            document.getElementById('ventanaCarga')!.classList.add('noActivo')
-        }, 500);
-        document.getElementById('inicioSesion')!.classList.remove('noActivo') // Activa la ventana de inicio de sesion
-        return
-    }
+    
 
     // Si el usuario no tiene los permisos necesarios entonces lo devuelve al inicio de la pagina
     if(usuarioInformacion.rol!=='admin') {
@@ -185,6 +201,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         return
     }
 
+    cargarBotonesBarraLateral()
     cargarVentanaModificarProducto()
     cargarSeccionConfiguracion()
     cargarSeccionCaja()

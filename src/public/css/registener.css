@@ -95,7 +95,7 @@ body{
     align-items: end;
     justify-items: center;
     z-index: 402;
-    width: 5vw;
+    width: 60px;
     pointer-events: all;
 }
 

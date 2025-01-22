@@ -139,7 +139,7 @@
                 <h4 class="ventana__modProd-h4" >Variantes</h4>
                 <!-- Indice de categorias -->
                 <div id="ventana__modProd__modVar__indice">
-                    <h5>SKU</h5>
+                    <h5 class="ventana__modProd__modVar__indice__SKU">SKU</h5>
                     <h5>Color</h5>
                     <h5>Talle</h5>
                     <h5>Stock</h5>
@@ -302,14 +302,16 @@
     <section id="seleccionProductos" class="contenedorRegistener1">
         <div class="contenedorRegistener2" id="seleccionProductos__div-contenedorSeleccionarProductos">
             <h2>Seleccionar Productos</h2>
-            <label>
-                Agrupar por categoria
-                <input type="checkbox"  id="seleccionProductos__botonAgruparCategorias" checked>
-            </label>
-            <label>
-                Agrupar por productos
-                <input type="checkbox"  id="seleccionProductos__botonSoloVariantes" checked>
-            </label>
+            <div id="seleccionProductos__div-checkboxs">
+                <label>
+                    Agrupar por categoria
+                    <input type="checkbox"  id="seleccionProductos__botonAgruparCategorias" checked>
+                </label>
+                <label>
+                    Agrupar por productos
+                    <input type="checkbox"  id="seleccionProductos__botonSoloVariantes" checked>
+                </label>
+            </div>
             <form id="seleccionProductos__form-buscarSKU"><input id="seleccionProductos__input-buscarSKU" class="inputRegistener1" placeholder="Buscar un SKU"></form>
             <form id="seleccionProductos__form-buscar"><input id="seleccionProductos__input-buscar" class="inputRegistener1" placeholder="Buscar un producto"></form>
             <div id="seleccionProductos__div-productos" ></div>
