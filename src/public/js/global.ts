@@ -14,7 +14,7 @@ window.addEventListener("pageshow", () => {
 
 
 // Define el entorno
-export let url:string = "https://mi-aplicacion-production.up.railway.app"
+export let url:string = "https://registener-production.up.railway.app"
 
 // Define los url del REST server
 export const urlProductos:string = url + '/api/productos'

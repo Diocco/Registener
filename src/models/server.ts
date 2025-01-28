@@ -81,7 +81,6 @@ class Server {
     routes() {
         
         // API
-        this.app.use(this.conexionConServidor,conexionDB)
         this.app.use(this.usuariosPath, usuariosRoutes);
         this.app.use(this.authPath, authRoutes);
         this.app.use(this.categoriasPath, categoriasRoutes);
@@ -91,14 +90,20 @@ class Server {
         this.app.use(this.registroVentasPath, registroVentasRoutes);
         this.app.use(this.registroCajaPath, registroCajaRoutes);
         
-        // HTML
-        this.app.get('*', cargarRegistener); // Configura la ruta
     }
 
     // Inicia el servidor
     start() {
-        this.app.listen(8080, () => {
-            console.log(`Servidor escuchando en http://localhost:8080`);
+        this.app.listen(this.port, async () => {
+            try {
+                //Conecta la base de datos usando la variable global como argumento
+                await mongoose.connect(process.env.MONGO_DB!);
+                console.log("Base de datos conectada con exito");
+            } catch (error) {
+                console.log("No se pudo conectar con la base de datos");
+                throw new Error("No se pudo conectar con la base de datos");
+            }
+            console.log(`Servidor escuchando en el puerto ${this.port}`);
         });
     }
     
