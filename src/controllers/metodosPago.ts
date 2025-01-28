@@ -7,8 +7,13 @@ import VentaRegistro from "../models/registroVenta.js";
 
 export const verMetodosPago = async(req: Request, res: Response) =>{
 
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
+
     try{
-        const metodosPago = await MetodoPago.find()  // Busca todos los metodos de pago
+        const metodosPago = await MetodoPago.find({
+            usuario: usuario._id, // Se asegura que los metodos de pago son las creadas por el usuario
+        })  // Busca todos los metodos de pago
 
         res.status(200).json({metodosPago})
 
@@ -30,10 +35,11 @@ export const crearMetodoPago = async(req: Request, res: Response) =>{
 
     const usuario:usuario = req.body.usuario
     
-    let data:MetodoPagoI={ // Estructura la informacion obligatoria para realizar la solicitud
+    let data={ // Estructura la informacion obligatoria para realizar la solicitud
         nombre,
         tipo,
-        estado:true
+        estado:true,
+        usuario
     }
 
     try{

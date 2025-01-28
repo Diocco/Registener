@@ -66,6 +66,10 @@ const ventaSchema = new mongoose.Schema<RegistroVentaI>({
         type: String,
         default:'Completado'
     },
+    usuario:{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Usuario' 
+    },
     modificaciones:[{
         fecha:{
             type: Date

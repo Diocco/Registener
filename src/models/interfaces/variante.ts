@@ -8,5 +8,6 @@ export interface variante {
     SKU: string,
     stock: number,
     esFavorito: boolean,
+    usuario:mongoose.Schema.Types.ObjectId 
     save?: () => Promise<void>
     }

@@ -26,7 +26,8 @@ export const registrarCierreCaja = async(req: Request, res: Response) =>{
         usuarioApertura,
         usuarioCierre,
         mediosDePago,
-        observacion
+        observacion,
+        usuario
     }
     try{
 
@@ -53,10 +54,13 @@ export const verRegistroCaja = async(req: Request, res: Response)=>{
     const fechaHasta = req.query.fechaHasta as string|| new Date().toString();  
     const pagina:number = Math.abs(Number(req.query.pagina)) || 1;  // Valor que indica la pagina de los resultados
 
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
 
     try{
         let filtros: any = {
             $and: [
+                { usuario: usuario._id } , // Se asegura que las categorias son las creadas por el usuario
                 { fechaCierre: { $gte: new Date(fechaDesde), $lte: new Date(fechaHasta)  } },  // Rango de precios
             ]
         };

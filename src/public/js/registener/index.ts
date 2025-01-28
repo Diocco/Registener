@@ -149,14 +149,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     const contenedorOpcionesCategorias = document.getElementById('ventana__modProd__caracteristicas__select__categoria')! as HTMLSelectElement
     const textoErrorCarga = document.getElementById('ventanaCarga__texto')!
 
-    let esConexionExitosa:boolean = await conexionConServidor() // Conecta con la base de datos
-    // Si la conexion es exitosa y el usuario que inicio sesion es admin entonces retira la ventana de carga
-    if(!esConexionExitosa){
-        textoErrorCarga.textContent='Error al cargar. Porfavor reinicie'
-        console.error("Error al conectar con la base de datos")
-        return
-    }
-
     // Si no existe un toquen de acceso entonces envia al usuario al inicio de sesion
     if(!tokenAcceso) { 
         activarVentanaIniciarSesion()
@@ -171,6 +163,9 @@ document.addEventListener("DOMContentLoaded", async function() {
         activarVentanaIniciarSesion()
         return
     }
+
+    document.getElementById("seleccionProductos")!.classList.remove('noActivo'); // Activa la seccion principal del programa
+
 
     [,categorias,metodosPago] = await Promise.all([
         buscarCargarProductos(), // Busca y carga los productos
@@ -194,12 +189,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         return
     }
 
-    // Si la conexion es exitosa y el usuario que inicio sesion es admin entonces retira la ventana de carga
-    if(!esConexionExitosa){
-        textoErrorCarga.textContent='Error al cargar. Porfavor reinicie'
-        console.error("Error al conectar con la base de datos")
-        return
-    }
 
     cargarBotonesBarraLateral()
     cargarVentanaModificarProducto()

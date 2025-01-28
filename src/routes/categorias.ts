@@ -25,9 +25,11 @@ import {categoriaExiste } from '../database/categoriasVerificaciones.js';
 const router = express.Router();
 
 router.get('/', // Obtener categorias
+    validarJWT, // Valida que el usuario que realiza la accion sea valido
     verCategorias) 
 
 router.get('/:id', // Obtener categoria por id
+    validarJWT, // Valida que el usuario que realiza la accion sea valido
     check('id').custom(categoriaExiste),
     validarCampos,
     verCategoriaID) 

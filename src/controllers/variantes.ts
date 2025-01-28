@@ -6,6 +6,7 @@ import { error } from "../interfaces/error.js";
 import { SKUUnico } from '../database/variantesVerificaciones.js';
 import Producto from "../models/productos.js";
 import { producto } from "../models/interfaces/producto.js";
+import { usuario } from "../models/interfaces/usuario.js";
 
 
 
@@ -23,13 +24,17 @@ export const crearVariante = async(req: Request, res: Response)=>{
         stock
     } = req.body
 
-    const data:variante={
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
+
+    const data={
         SKU,
         producto,
         color,
         talle,
         'esFavorito':false,
-        'stock':Number(stock)
+        'stock':Number(stock),
+        usuario
     }
     try {
     
@@ -57,8 +62,14 @@ export const crearVariante = async(req: Request, res: Response)=>{
 export const verVariantes = async(req: Request, res: Response)=>{
     const { productoId } = req.params 
 
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
+
     try{
-        const variantes:variante[] = await Variante.find( {producto:productoId} )
+        const variantes:variante[] = await Variante.find( {
+            usuario: usuario._id, // Se asegura que las varias son las creadas por el usuario
+            producto:productoId
+        } )
 
         res.json(variantes)
     } catch (error) {

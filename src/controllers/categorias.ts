@@ -8,8 +8,15 @@ import { error } from '../interfaces/error.js';
 
 // Devuelve todas las categorias
 const verCategorias = async(req: Request, res: Response)=>{
+
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
+
     const nombres:string[]|null = req.query.nombres as string[] || null;
-    const condicion = {estado:true}; // Condicion/es que debe cumplir la busqueda
+    const condicion = {
+        usuario: usuario._id, // Se asegura que las categorias son las creadas por el usuario
+        estado:true
+    }; // Condicion/es que debe cumplir la busqueda
 
     try {
         // Crea un array de promesas que no son independientes entre ellas para procesarlas en paralelo

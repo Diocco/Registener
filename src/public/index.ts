@@ -1,7 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import { fork } from 'child_process'; // Para ejecutar el servidor Express en un proceso hijo
-import Server from '../models/server.js';  // Asegúrate de que esta importación sea correcta
 import { fileURLToPath } from 'url';
 
 // Directorio
@@ -26,8 +24,7 @@ function createWindow() {
 
   mainWindow.webContents.openDevTools();
 
-  // Cargar la URL del servidor Express
-  mainWindow.loadURL('http://localhost:8080');
+  mainWindow.loadFile(path.join(__dirname, 'views/registener.html')) // Carga el html con todo el programa
 
   // // Ocultar la barra de menú
   // mainWindow.setMenu(null);
@@ -42,16 +39,9 @@ function createWindow() {
   });
 }
 
-// Inicializar el servidor Express en un proceso hijo
-function startServer() {
-  const server = new Server(); // Inicia tu servidor Express
-  server.start();  // Arranca el servidor en el puerto definido (8080)
-}
 
 // Cuando Electron esté listo, crear la ventana
 app.whenReady().then(() => {
-  // Iniciar el servidor Express en un proceso hijo
-  startServer();
 
   // Crear la ventana de la aplicación Electron
   createWindow();

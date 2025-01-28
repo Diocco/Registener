@@ -62,8 +62,8 @@ router.put('/', //Actualiza un usuario
     validarCampos, // Devuelve un error al usuario si algun check fallo
     actualizarUsuario) // Agrega un nuevo usuario a la base de datos
 
-router.get('/', // Devuelve los usuarios
-    verUsuarios) 
+// router.get('/', // Devuelve los usuarios
+//     verUsuarios) 
 
 router.get('/token/', // Obtener usuario por id
     validarJWT,

@@ -31,9 +31,11 @@ import {
 const router = express.Router();
 
 router.get('/', // Obtener productos
+    validarJWT, // Valida que el usuario que realiza la accion sea valido
     verProductos) 
 
 router.get('/:id', // Obtener producto por id
+    validarJWT, // Valida que el usuario que realiza la accion sea valido
     check('id').custom(productoExiste),
     validarCampos,
     verProductoID) 

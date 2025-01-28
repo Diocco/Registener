@@ -1,20 +1,7 @@
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url'
 import 'dotenv/config';
 import cors from 'cors'
 
-// Directorio
-const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
-const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
-
-// Base de datos
-import  conexionDB  from '../routes/conexionConServidor.js'
-
-// Controladores
-import { 
-    cargarRegistener,
-    } from '../controllers/archivos.js';
 
 // Rutas
 import usuariosRoutes from '../routes/usuarios.js';
@@ -28,8 +15,6 @@ import registroCajaRoutes from '../routes/registroCaja.js';
 
 import fileUpload from 'express-fileupload';
 import mongoose from 'mongoose';
-
-
 
 class Server {
     // Variables

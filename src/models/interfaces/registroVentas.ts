@@ -24,5 +24,6 @@ export interface RegistroVentaI{
         fecha:Date,
         usuarioNombre:string,
         modificacion:string
-    }]
+    }],
+    usuario:mongoose.Schema.Types.ObjectId 
 }

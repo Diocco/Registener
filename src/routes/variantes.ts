@@ -23,6 +23,7 @@ router.post('/', // Crear variante - Admin
     crearVariante) 
 
 router.get('/:productoId', // Ver variantes
+    validarJWT, // Valida que el usuario que realiza la accion sea valido
     check('productoId').custom(productoExiste),
     validarCampos,
     verVariantes) 

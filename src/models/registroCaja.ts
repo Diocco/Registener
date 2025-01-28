@@ -35,6 +35,10 @@ const cajaSchema = new mongoose.Schema<RegistroCajaI>({
     observacion: { 
         type: String
     },
+    usuario:{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Usuario' 
+    },
 });
 
 

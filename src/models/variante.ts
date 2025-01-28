@@ -23,7 +23,11 @@ const varianteSchema = new mongoose.Schema<variante>({
     },
     esFavorito:{
         type:Boolean,
-    }
+    },
+    usuario:{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Usuario' 
+    },
 })
 
     const Variante:Model<variante> = mongoose.model<variante>('Variante', varianteSchema);

@@ -6,8 +6,9 @@ export interface RegistroCajaI {
     fechaCierre:Date,
     usuarioApertura:string,
     usuarioCierre:string,
-    mediosDePago:[MediosDePagoI]
-    observacion:string
+    mediosDePago:[MediosDePagoI],
+    observacion:string,
+    usuario:mongoose.Schema.Types.ObjectId, 
 }
 
 export interface MediosDePagoI {

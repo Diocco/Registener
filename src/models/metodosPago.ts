@@ -9,6 +9,10 @@ const metodoPagoSchema = new mongoose.Schema<MetodoPagoI>({ // Crea el esquema p
         required: true 
     },
     estado: { type: Boolean, default: true },
+    usuario:{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Usuario' 
+    },
 })
 
 const MetodoPago:Model<MetodoPagoI> = mongoose.model<MetodoPagoI>('metodoPago', metodoPagoSchema);

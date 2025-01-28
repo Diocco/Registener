@@ -16,8 +16,12 @@ const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo
 import fs from 'fs'
 import { error } from '../interfaces/error.js';
 
+
 // Devuelve todas las productos
 const verProductos = async(req: Request, res: Response)=>{
+
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
 
     // Si se envian queryparams entonces se buscan todos los productos filtrados por los parametros recibidos
     const desde:number = Math.abs(Number(req.query.desde)) || 0;  // Valor por defecto 0 si no se pasa el parámetro o es invalido
@@ -60,7 +64,10 @@ const verProductos = async(req: Request, res: Response)=>{
         // Busca las categorías por sus nombres
         let categoriasCompletas
         if(categoriasNombreArreglo[0]){ // Si se pasa como argumento las categorias especificas:
-            categoriasCompletas = await Categoria.find({ nombre: {$in: categoriasNombreArreglo}});
+            categoriasCompletas = await Categoria.find({ 
+                usuario: usuario._id, // Se asegura que las categorias son las creadas por el usuario
+                nombre: {$in: categoriasNombreArreglo},
+            });
         }else{ // Si no se busco ninguna categoria en particular entonces busca todas las categorias validas
             categoriasCompletas = await Categoria.find();
         }
@@ -82,6 +89,7 @@ const verProductos = async(req: Request, res: Response)=>{
                 { tags: { $in: [palabraBuscadaRegExp] } }  // Aquí el uso de $in, pero asegurándonos que tags es un array
             ],
             $and: [
+                { usuario: usuario._id}, // Se asegura que los productos son los creadas por el usuario
                 { estado: true },  // El producto no tiene que estar eliminado
                 { precio: { $gte: precioMin, $lte: precioMax } },  // Rango de precios
                 { categoria: { $in: categoriasIds } }  // Las categorías deben ser parte de las seleccionadas

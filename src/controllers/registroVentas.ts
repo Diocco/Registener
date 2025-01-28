@@ -36,7 +36,8 @@ export const registrarVenta = async(req: Request, res: Response) =>{
         total,
         metodo1,
         estado,
-        etiqueta
+        etiqueta,
+        usuario: usuario._id
     }
 
     try{
@@ -70,6 +71,9 @@ export const registrarVenta = async(req: Request, res: Response) =>{
 
 export const verRegistroVentas = async(req: Request, res: Response)=>{
 
+    // Obtiene al usuario que realizo la solicitud
+    const usuario = req.body.usuario as usuario
+
     // Si se envian queryparams entonces se buscan todos los productos filtrados por los parametros recibidos
     const desde:number = Math.abs(Number(req.query.desde)) || 0;  // Valor por defecto 0 si no se pasa el parámetro o es invalido
     const cantidadElementos:number = Math.abs(Number(req.query.cantidadElementos)) || 20;  // Valor por defecto 20 para mostrar los elementos en varias paginas
@@ -95,6 +99,7 @@ export const verRegistroVentas = async(req: Request, res: Response)=>{
             // Los filtros opcionales donde el valor buscado puede estar en varias propiedades
             $or: [{ vacio:undefined }],
             $and: [
+                { usuario: usuario._id }, // Se asegura que las categorias son las creadas por el usuario
                 { fechaVenta: { $gte: new Date(fechaDesde), $lte: new Date(fechaHasta)  } },  // Rango de precios
                 { vacio:undefined }
                 // { metodo1:metodo1||'' }

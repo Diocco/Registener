@@ -3,7 +3,7 @@ import { EspecificacionI, producto } from "../../../../models/interfaces/product
 
 import { ventanaEmergenteCargarImagenProducto } from "./modificarFoto.js";
 import { actualizarProducto, crearProducto, solicitudEliminarProducto } from "../../services/productosAPI.js";
-import { buscarCargarProductos, categorias } from "../index.js";
+import { buscarCargarProductos, categorias, usuarioInformacion } from "../index.js";
 
 
 import { variante } from "../../../../models/interfaces/variante.js";
@@ -341,7 +341,8 @@ const obtenerVariantesDOM =(productoID:string):variante[]=>{
             color,
             talle,
             stock,
-            'esFavorito':false
+            'esFavorito':false,
+            usuario:usuarioInformacion!._id
         }
 
         // Agrega las nueva variante
@@ -472,7 +473,8 @@ const asignaBotonAgregarVariante=()=>{
             talle: '',
             SKU: (new Date().getTime()).toString(), // Crea un SKU por default, el usuario luego puede definir uno diferente
             stock: 0,
-            'esFavorito':false
+            'esFavorito':false,
+            usuario:usuarioInformacion!._id
         }
 
         agregarVarianteDOM(contenedorVariantes,varianteNueva) // Crea la variante en el DOM
