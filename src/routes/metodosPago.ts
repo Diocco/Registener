@@ -4,7 +4,7 @@ import { activarMetodoPago, crearMetodoPago, eliminarMetodoPago, verMetodosPago 
 import { validarJWT } from '../middlewares/validarJWT.js';
 import { validarRolJWT } from '../middlewares/validarRolJWT.js';
 import { validarCampos } from '../middlewares/validarCampos.js';
-import { metodoPagoNombreUnico, metodoPagoTipoValido } from '../../database/metodosPagoVerificaciones.js';
+import { metodoPagoNombreUnico, metodoPagoTipoValido } from '../database/metodosPagoVerificaciones.js';
 
 const router = express.Router();
 

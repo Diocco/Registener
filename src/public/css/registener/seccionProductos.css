@@ -23,12 +23,6 @@
     min-height: 70px;
 }
 
-/* Indice de la tabla que contiene los productos */
-#configProductos__indice{
-    background-color: initial;
-    color:var(--colorLetraTenue)
-}
-
 /*Tabla de productos*/
 #configProductos__productos{
     display: flex;
@@ -39,7 +33,7 @@
 }
 
 /* Contenedor de productos individuales */
-.configProductos__producto{
+.configProductos__producto, #configProductos__indice{
     display: grid;
     grid-template-columns: minmax(300px, 680px) 230px 110px 90px;
     align-items: center;
@@ -49,6 +43,12 @@
 .configProductos__producto:hover{
     filter: brightness(1.05);
     cursor: pointer;
+}
+
+/* Indice de la tabla que contiene los productos */
+#configProductos__indice{
+    background-color: initial;
+    color:var(--colorLetraTenue)
 }
 
 .configProductos__producto-stock{

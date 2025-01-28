@@ -2,8 +2,8 @@ import express from 'express'; // Express
 import { check } from 'express-validator'; // Validaciones
 import { validarCampos, validarJWT, validarRolJWT } from '../middlewares/index.js';
 import { actualizarVariante, actualizarVariantes, aplicarVenta, crearVariante, verVariantes } from '../controllers/variantes.js';
-import { SKUUnico, varianteExiste } from '../../database/variantesVerificaciones.js';
-import { productoExiste } from '../../database/productosVerificaciones.js';
+import { SKUUnico, varianteExiste } from '../database/variantesVerificaciones.js';
+import { productoExiste } from '../database/productosVerificaciones.js';
 import { eliminarVariante } from '../controllers/variantes.js';
 
 

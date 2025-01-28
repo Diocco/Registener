@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import Variante from "../src/models/variante.js";
+import Variante from "../models/variante.js";
 
 // Verifica que el SKU sea unico 
 export const SKUUnico = async(SKU:String,id?:string) =>{

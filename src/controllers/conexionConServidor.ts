@@ -7,7 +7,7 @@ export const conexionDB  = async(req: Request, res: Response)=>{
     try {
         //Conecta la base de datos usando la variable global como argumento
         // await mongoose.connect(process.env.MONGO_DB!);
-        await mongoose.connect("mongodb+srv://diegoiocco13:%40Fpfjbzx13@embike.s5mdo.mongodb.net/usuarios");
+        await mongoose.connect("mongodb+srv://diegoiocco13:%40Fpfjbzx13@embike.s5mdo.mongodb.net/alfredo");
         res.status(200).json('0')
         console.log("Base de datos conectada con exito");
     } catch (error) {

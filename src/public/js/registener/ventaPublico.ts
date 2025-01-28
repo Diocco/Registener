@@ -241,6 +241,7 @@ const botonesModificacionPago=()=>{
 
     // Primero crea un input inicial para modificadores de pago no contemplados
     const inputModificacion = document.createElement('input')
+    inputModificacion.id='div-pago__modificacion-input'
     inputModificacion.autocomplete='off'
     inputModificacion.className='inputRegistener1'
     inputModificacion.placeholder='Ingrese un porcentaje de descuento'
@@ -318,12 +319,15 @@ const cargarBotonConfirmar=()=>{
         registrarVenta(total,metodo1,'Exitoso','Venta',pago1,pago2,metodo2,'',descuento,modificacionNombre,observacion,carrito);
 
         const respuesta = await aplicarVenta(carrito)
+        console.log(respuesta)
         if(respuesta==0) { // Si todo sale bien:
             carrito1.reiniciarCarrito() // Vacia el carrito
             sessionStorage.setItem('metodoSeleccionado','') // Reinicia el valor de la eleccion de metodo de pago
             sessionStorage.setItem('modificacionSeleccionado','') // Reinicia el valor de la eleccion de modificacion
             textAreaObervacion.value='' // Reinicia el valor de la observacion de la compra
             document.getElementById('botonIrSeleccionProductos')!.click() // Desplaza la ventana a la seleccion de productos
+            document.getElementById('seleccionProductos')!.querySelectorAll('.boton__activo').forEach(botonActivo=>botonActivo.classList.remove('boton__activo')); // Elimina el estado activo de todos los botones
+            (document.getElementById('div-pago__modificacion-input')! as HTMLInputElement).value = '' // Vacia el input para colocar un descuento personalizado
             cargarVentaPublico() // Vuelve a cargar la seccion para aplicar los cambios
         }
     }

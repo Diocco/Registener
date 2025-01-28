@@ -11,6 +11,9 @@ import { actualizarVariantes, crearVariante, eliminarVariante } from "../../serv
 import { solicitudAgregarCategoria } from "../../services/categoriasAPI.js";
 import { buscarCargarCategorias } from "../../helpers/categorias.js";
 
+// Contenedores de categorias
+const contenedorCategorias:HTMLElement = document.getElementById('configProductos__categorias')!
+const contenedorOpcionesCategorias = document.getElementById('ventana__modProd__caracteristicas__select__categoria')! as HTMLSelectElement
 
 
 // Contenedores de la ventana emergente
@@ -60,7 +63,11 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
     marca.value="";
     modelo.value="";
     categoriaIngresada.value=''
-    descripcion.textContent=''
+    descripcion.textContent='';
+
+    // Esconde la opcion para agregar una nueva categoria
+    (document.getElementById('ventana__modProd__caracteristicas__input__categoria')! as HTMLInputElement).classList.add('noActivo')
+
 
     // Define la funcion del boton 
     let esCrearProducto=false
@@ -140,6 +147,7 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
     
     // Vuelve a cargar los productos actualizados
     buscarCargarProductos()
+    buscarCargarCategorias(contenedorCategorias,contenedorOpcionesCategorias) 
     return
 
 }
@@ -191,8 +199,7 @@ export const agregarImagenesDOM = async(productoInformacion:producto)=>{
 }
 
 const cargarProductoDOM =(producto:producto)=>{
-    const categoriaCompleta = categorias!.find(categoria=>categoria._id===producto.categoria)!
-
+    const categoriaCompleta = categorias!.find(categoria=>categoria._id===producto.categoria)
 
     // Coloca la informacion en los inputs correspondientes
     id.value = producto._id.toString();
@@ -200,7 +207,8 @@ const cargarProductoDOM =(producto:producto)=>{
     precio.value = `${producto.precio===0?'':producto.precio}`;
     marca.value = producto.marca==="Sin marca"?'':producto.marca;
     modelo.value = producto.modelo==="Sin modelo"?'':producto.modelo;
-    categoria.value = categoriaCompleta.nombre==="Sin categoria"?'':categoriaCompleta.nombre;
+    if(categoriaCompleta) categoria.value = categoriaCompleta.nombre
+    else categoria.value = "Seleccione una categoria"
     descripcion.textContent = producto.descripcion;
 
     // Carga las imagenes del producto en el DOM
@@ -218,8 +226,6 @@ const validarCaracteristicasDOM = async(datosFormulario:FormData)=>{
             datosFormulario.set('categoria',categoriaNueva) // Agrega la categoria al FormData para enviarlo junto con la demas informacion del producto
             
             // Vuelve a cargar las categorias para reflejar los cambios TODO la categoria no aparece hasta recien que se actualiza la pagina, lo cual es un error
-            const contenedorCategorias:HTMLElement = document.getElementById('configProductos__categorias')!
-            const contenedorOpcionesCategorias = document.getElementById('ventana__modProd__caracteristicas__select__categoria')! as HTMLSelectElement
             buscarCargarCategorias(contenedorCategorias,contenedorOpcionesCategorias) 
         }
     }
@@ -228,8 +234,8 @@ const validarCaracteristicasDOM = async(datosFormulario:FormData)=>{
     if(!precio.value) precio.classList.add('boton__enError')
     if(!marca.value) marca.classList.add('boton__enError')
     if(!modelo.value) modelo.classList.add('boton__enError')
-    if(!categoria.value) categoria.classList.add('boton__enError')
-    
+    if(categoria.value==="Seleccione una categoria") categoria.classList.add('boton__enError')
+
 }
 
 // Variantes

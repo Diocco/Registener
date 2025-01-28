@@ -17,7 +17,7 @@ const botonVerMovimientos = document.getElementById('seccionCaja__movimientosCaj
 const botonConfirmarCambio = document.getElementById('seleccionCaja__cambiosCaja__button') as HTMLButtonElement
 
 // Inputs
-let inputsSaldoInicial:NodeListOf<HTMLInputElement> 
+let inputsSaldoInicial:NodeListOf<HTMLInputElement> | undefined
 let inputsSaldoFinal:NodeListOf<HTMLInputElement> 
 
 // Contenedores
@@ -74,7 +74,7 @@ const cargarBotonConfirmarCambio=()=>{
 
 
     // Carga las opciones de metodos de pago
-    let opcionesHTML:string = `<option value="" disabled selected>Selecciona una opción</option>`
+    let opcionesHTML:string = `<option value="" disabled selected>Selecciona un metodo</option>`
     metodosPago.forEach(metodo=>{
         if(!metodo.estado) return // Verifica que sea un metodo activo
         opcionesHTML=opcionesHTML+`<option>${metodo.nombre}</option>`
@@ -173,6 +173,7 @@ const cargarMetodosPago=async ()=>{
 }
 
 const obtenerSaldoInicialDOM=()=>{
+    if(!inputsSaldoInicial) return
     inputsSaldoInicial.forEach(input=> {
         const metodoNombre = input.parentElement!.querySelector(".seleccionCaja__tablaSaldos__metodo")!.textContent!
         localStorage.setItem(`saldoInicialMetodo-${metodoNombre}`,input.value.toString())
@@ -180,6 +181,10 @@ const obtenerSaldoInicialDOM=()=>{
 }
 
 const reiniciarVariables=()=>{
+    // Vacia todos los contenedores
+    const contenedoresMontoEsperado = document.querySelectorAll('.seleccionCaja__tablaSaldos__input-esperado')
+    contenedoresMontoEsperado.forEach(cont=>cont.textContent=`$ 0`)
+
     // Reinicia los valores iniciales de cada medio de pago
     const contenedoresMediosPago = document.querySelectorAll(".seleccionCaja__tablaSaldos__fila")
     contenedoresMediosPago.forEach(cont=>{
@@ -196,7 +201,6 @@ const reiniciarVariables=()=>{
     // Reinicia los contenedores de diferencia de saldo
     document.querySelectorAll(".seleccionCaja__tablaSaldos__input-diferencia").forEach(cont=>cont.textContent='$ 0');
 }
-
 
 const obtenerMediosPago=()=>{
     const contenedoresMediosPago = document.querySelectorAll(".seleccionCaja__tablaSaldos__fila")
@@ -225,6 +229,8 @@ const obtenerMediosPago=()=>{
             saldoFinal,
             saldoEsperado
         }
+        console.log(cont.querySelector(".seleccionCaja__tablaSaldos__input-esperado"))
+        console.log(cont.querySelector(".seleccionCaja__tablaSaldos__input-esperado")!.textContent)
         mediosDePago[i]=medioPago
         i++
     })
@@ -308,6 +314,7 @@ const abrirCaja=(soloReflejar:boolean=false)=>{
     })
 
     // Desactiva los inputs para ingresar el saldo inicial
+    if(!inputsSaldoInicial) return
     inputsSaldoInicial.forEach(input=>{
         input.disabled = true
         input.classList.add('nodisponible')
@@ -392,10 +399,6 @@ const cerrarCaja=()=>{
     // Define la hora actual en el contenedor de ultimo cierre de caja
     contenedorUltimoCierre.textContent = `Ultimo cierre: ${obtenerFechaActual()}`
     contenedorUltimoCierre.classList.remove('noActivo')
-
-    // Vacia todos los contenedores
-    const contenedoresMontoEsperado = document.querySelectorAll('.seleccionCaja__tablaSaldos__input-esperado')
-    contenedoresMontoEsperado.forEach(cont=>cont.textContent=`$ 0`)
 
     const mediosDePago = obtenerMediosPago()
     if(mediosDePago) solicitudRegistrarCaja(fechaDesde!,fechaHasta!,"","",mediosDePago)

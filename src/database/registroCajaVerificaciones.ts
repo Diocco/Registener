@@ -1,4 +1,4 @@
-import { MediosDePagoI } from "../src/models/interfaces/registroCaja.js";
+import { MediosDePagoI } from "../models/interfaces/registroCaja.js";
 
 export const mediosDePagoValido=(mediosDePago:MediosDePagoI[])=>{
     mediosDePago.forEach((m)=>{

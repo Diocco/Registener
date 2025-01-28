@@ -359,7 +359,7 @@ const eliminarProducto = async(req: Request, res: Response) =>{
 
     try{
         // Busca la producto con ese id y cambia su estado de actividad
-        const productoEliminado = await Producto.findByIdAndUpdate( id , {estado: false}, { new: true }); 
+        let productoEliminado  = await Producto.findByIdAndDelete( id ); // Si es necesaria la eliminacion fisica de la base de datos
         const usuarioAutenticado:usuario = req.body.producto
         res.status(200).json({
             productoEliminado,

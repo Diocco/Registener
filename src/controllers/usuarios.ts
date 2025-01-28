@@ -5,7 +5,7 @@ const { hashSync } = pkg; // Destructura las funciones que necesitas
 
 
 import Usuario from '../models/usuario.js';
-import { generarJWT } from '../../helpers/generarJWT.js';
+import { generarJWT } from '../helpers/generarJWT.js';
 import Producto from '../models/productos.js';
 import fileUpload from 'express-fileupload';
 
@@ -144,7 +144,7 @@ const actualizarUsuario = async(req: Request, res: Response) =>{
             piso,
             observacion,
             metodosPago,
-            modificacionesPago
+            modificacionesPagoString
         } = req.body // Desestructura las propiedades modificables
     const  imgPura  = (req.files?req.files.img:undefined) as fileUpload.UploadedFile// Obtiene la imagen 
     let img:string|undefined // Se inicia la variable que va a contener el path de la foto de perfil del usuario
@@ -166,10 +166,19 @@ const actualizarUsuario = async(req: Request, res: Response) =>{
         img,
         direccion,
         preferencias:{
-            metodosPago,
-            modificacionesPago
+            metodosPago
         }
     }
+
+    let modificacionesPago:string[]
+    if(modificacionesPagoString) {
+        if((modificacionesPagoString as string).length>0) modificacionesPago = JSON.parse(modificacionesPagoString)
+            else modificacionesPago = []
+        Object.assign(data.preferencias,{modificacionesPago})
+    }
+    
+
+
 
     try{
         if(imgPura){ // Si se envia una foto de perfil del usuario entonces la sube al servidor

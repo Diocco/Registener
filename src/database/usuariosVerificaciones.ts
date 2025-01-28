@@ -1,5 +1,5 @@
-import Role from "../src/models/rol.js";
-import Usuario from '../src/models/usuario.js';
+import Role from "../models/rol.js";
+import Usuario from '../models/usuario.js';
 
 // Verifica que el rol sea valido
 const esRolValido = async (rol:string) => { 

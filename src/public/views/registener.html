@@ -123,11 +123,8 @@
                 <h4 class="ventana__modProd-h4" >Modelo</h4>
                 <input  class="ventana__modProd__caracteristicas__input"  name="modelo"    id="ventana__modProd__caracteristicas__input__modelo"     placeholder="Ingrese el modelo del producto"     >
                 <h4 class="ventana__modProd-h4" >Categoria</h4>
-                <select class="ventana__modProd__caracteristicas__input" name="categoria"  id="ventana__modProd__caracteristicas__select__categoria"          >
-                    <option>BMX</option>
-                    <option>MTB</option>
-                    <option>Niños</option>
-                    <option>Accesorios</option>
+                <select class="ventana__modProd__caracteristicas__input"  name="categoria"  id="ventana__modProd__caracteristicas__select__categoria"          >
+                    <option selected disabled>Seleccione una categoria</option>
                     <option>Agregar Categoria</option>
                 </select>
                 <input  class="ventana__modProd__caracteristicas__input noActivo" name="categoria" placeholder="Ingrese una nueva categoria" id="ventana__modProd__caracteristicas__input__categoria">
@@ -285,7 +282,7 @@
             <div id="configProductos__categorias" ></div>
 
             <!-- Indice de la tabla con los productos -->
-            <div id="configProductos__indice" class="contenedorRegistener3 configProductos__producto">
+            <div id="configProductos__indice" class="contenedorRegistener3">
                 <div>Nombre</div>
                 <div>Precio</div>
                 <div class="configProductos__producto-stock">Stock</div>
@@ -535,6 +532,10 @@
 
     <!-- Configuracion -->
     <section id="configuracion" class="contenedorRegistener1 noActivo">
+        <div id="configuracion__db" class="contenedorRegistener2">
+            <h3 class="configuracion__h3">Base de datos</h3>
+            <input id="configuracion__db" class="inputRegistener2">
+        </div>
         <div id="configuracion__global" class="contenedorRegistener2">
             <h3 class="configuracion__h3">Preferencias</h3>
             <h4 class="configuracion__h4">Tema</h4>
@@ -557,6 +558,15 @@
             </div>
             <div id="configuracion__caja__metodos"></div>
             <button id="configuracion__caja__metodos-agregar" class="botonRegistener3">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <h4> Modificaciones </h4>
+            <div id="configuracion__caja__mod-encabezado" class="configuracion__caja__mod-fila">
+                    <div>Nombre</div>
+                    <div>Valor</div>
+            </div>
+            <div id="configuracion__caja__mod"></div>
+            <button id="configuracion__caja__mod-agregar" class="botonRegistener3">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>

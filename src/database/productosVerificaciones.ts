@@ -1,4 +1,4 @@
-import Producto from "../src/models/productos.js";
+import Producto from "../models/productos.js";
 
 
 // Verifica que el producto exista

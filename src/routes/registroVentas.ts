@@ -2,7 +2,7 @@ import express from 'express'; // Express
 import { validarRolJWT,validarJWT, validarCampos } from '../middlewares/index.js';
 import { check } from 'express-validator';
 import { eliminarRegistroVenta, modificarRegistro, registrarVenta, verIngresos, verRegistro, verRegistroVentas } from '../controllers/registroVentas.js';
-import { registroVentaExiste } from '../../database/registroVentaVerificaciones.js';
+import { registroVentaExiste } from '../database/registroVentaVerificaciones.js';
 const router = express.Router();
 
 router.post('/', // Crear registro de venta - Admin

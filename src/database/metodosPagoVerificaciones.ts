@@ -1,4 +1,4 @@
-import MetodoPago from "../src/models/metodosPago.js"
+import MetodoPago from "../models/metodosPago.js"
 
 export const metodoPagoNombreUnico=async (nombre:string)=>{
     const metodosPago = await MetodoPago.find()

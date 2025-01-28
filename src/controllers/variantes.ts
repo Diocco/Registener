@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { variante } from "../models/interfaces/variante.js";
 import Variante from '../models/variante.js';
 import { error } from "../interfaces/error.js";
-import { SKUUnico } from '../../database/variantesVerificaciones.js';
+import { SKUUnico } from '../database/variantesVerificaciones.js';
 import Producto from "../models/productos.js";
 import { producto } from "../models/interfaces/producto.js";
 
@@ -211,15 +211,20 @@ export const eliminarVariante = async(req: Request, res: Response) =>{
 export const aplicarVenta = async(req: Request, res: Response) =>{
     // Obtiene el carrito completo como parametro
     let { carrito } = req.body; 
-
+    interface ElementoCarritoI{
+        SKU:string,
+        cantidad:number,
+        precio:number,
+        nombre:string
+    }
     
     try {
         if(!carrito) throw new Error("El carrito no es valido");
 
         // Recorre todo el carrito
-        for (let i = 0; i < carrito[0].length; i++) {
-            const SKU = carrito[0][i];
-            const cantidad = carrito[1][i]
+        (carrito as ElementoCarritoI[]).forEach(async elemento=>{
+            const SKU = elemento.SKU;
+            const cantidad =  elemento.cantidad
 
             if(!SKU) throw new Error("El SKU no es valido");
             if(!cantidad) throw new Error("La cantidad no es valida");
@@ -229,7 +234,7 @@ export const aplicarVenta = async(req: Request, res: Response) =>{
             
             variante.stock=variante.stock-cantidad // Actualiza el stock de la variante
             variante.save() // Guarda los cambios
-        }
+        })
 
         return res.status(200).json(0)
     } catch (error) {

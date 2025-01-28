@@ -19,7 +19,7 @@ import {
 
 
 // Verificaciones con la base de datos
-import {categoriaExiste } from '../../database/categoriasVerificaciones.js';
+import {categoriaExiste } from '../database/categoriasVerificaciones.js';
 
 
 const router = express.Router();

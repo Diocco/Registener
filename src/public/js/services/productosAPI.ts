@@ -109,7 +109,6 @@ export const crearProducto= async(datosProducto?:FormData):Promise<producto | un
         datosProducto.append('nombre','Sin nombre')
         datosProducto.append('marca','Sin marca')
         datosProducto.append('modelo','Sin modelo')
-        datosProducto.append('categoria','672956b70e8cd0e8b1fee8aa') // Id de la categoria "Sin categoria"
     }
 
     let productoCreado:producto|undefined = undefined

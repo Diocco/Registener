@@ -26,8 +26,8 @@ import {
     esRolValido, 
     correoUnico, 
     nombreUnico, 
-    usuarioExiste } from '../../database/usuariosVerificaciones.js';
-import { productoExiste } from '../../database/productosVerificaciones.js';
+    usuarioExiste } from '../database/usuariosVerificaciones.js';
+import { productoExiste } from '../database/productosVerificaciones.js';
 
 
 const router = express.Router();

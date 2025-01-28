@@ -1,14 +1,17 @@
-import { metodosPago } from "../registener/index.js";
+import { metodosPago, usuarioInformacion } from "../registener/index.js";
 import { MetodoPagoI } from "../../../models/interfaces/metodosPago.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 import { solicitudActivarMedioPago, solicitudCrearMetodoPago, solicitudEliminarMedioPago, solicitudObtenerMetodosPago } from "../services/metodosPagoAPI.js";
 import { cargarSeccionCaja } from "./seccionCaja.js";
 import { cargarBotonesVentaPublico } from "./ventaPublico.js";
 import { preguntar } from "./ventanasEmergentes/preguntar.js";
+import { solicitudActualizarUsuario } from "../services/usuariosAPI.js";
 
 export const cargarSeccionConfiguracion=()=>{
     cargarMetodosPago()
-    asignarBotonAgregarMetodo()
+    botonAgregarMetodo()
+    cargarModificadores()
+    botonAgregarModificador()
 }
 
 /* Configuracion de los metodos de pago */
@@ -19,7 +22,6 @@ const cargarMetodosPago=()=>{
     botonAgregarMetodo.classList.remove('noActivo') // Activa el boton para agregar metodos de pago
     contendorMetodos.innerHTML='' // Vacia el contenedor
     
-
     metodosPago.forEach(metodo=>{
         const metodoDIV = document.createElement('div')
         metodoDIV.innerHTML=`
@@ -42,6 +44,34 @@ const cargarMetodosPago=()=>{
     
     botonesEliminarMetodo()
     botonesActivarMetodo()
+
+}
+
+/* Configuracion de los modificadores */
+const cargarModificadores=()=>{
+    const contendorModificadores = document.getElementById('configuracion__caja__mod')!
+    const botonAgregarModificador = document.getElementById('configuracion__caja__mod-agregar')!
+
+    botonAgregarModificador.classList.remove('noActivo') // Activa el boton para agregar modificadores
+    contendorModificadores.innerHTML='' // Vacia el contenedor
+
+    const modificadores = usuarioInformacion!.preferencias.modificacionesPago
+    modificadores.forEach(modificacionPago=>{ 
+        const [nombre,valor] = modificacionPago.split('&',2)
+        const modDIV = document.createElement('div')
+        modDIV.innerHTML=`
+        <div class="configuracion__caja__mod-fila">
+            <div class="configuracion__caja__mod-nombre">${nombre}</div>
+            <div>${valor}</div>
+            <button class="configuracion__caja__mod-eliminar boton__negativo botonRegistener3 ">
+                <i class="fa-solid fa-trash-can " aria-hidden="true"></i>
+            </button>
+        </div>
+        `
+        contendorModificadores.appendChild(modDIV)
+    })
+    
+    botonesEliminarModificador()
 }
 
 const botonesEliminarMetodo=()=>{
@@ -61,6 +91,34 @@ const botonesEliminarMetodo=()=>{
             
             // Aplica los cambios en toda la aplicacion
             cargarMetodosPago()
+            cargarSeccionCaja()
+            cargarBotonesVentaPublico()
+        }
+    })
+}
+
+const botonesEliminarModificador=()=>{
+    const botonesEliminar: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".configuracion__caja__mod-eliminar")
+    botonesEliminar.forEach(boton=>{
+        boton.onclick=async ()=>{
+            const modNombre = boton.parentElement!.querySelector('.configuracion__caja__mod-nombre')!.textContent! // Obtiene el nombre del modificador que se quiere eliminar
+            
+            // Obtiene los modificadores de pago por valor y lo modifica
+            const modificadoresFinal = usuarioInformacion!.preferencias.modificacionesPago
+            const metodoIndex = usuarioInformacion!.preferencias.modificacionesPago.findIndex((medio) => medio.startsWith(modNombre))
+            modificadoresFinal.splice(metodoIndex,1)
+            // Envia el array de modificadores actualizado para actualizarlo en la base de datos
+            const formData = new FormData()
+            formData.append('modificacionesPagoString',JSON.stringify(modificadoresFinal))
+            console.log(modificadoresFinal)
+            const respuesta = await solicitudActualizarUsuario(formData) 
+
+            if(respuesta.errors.length===0) { // Si no hay errores entonces actualiza los modificadores de forma local
+                usuarioInformacion!.preferencias.modificacionesPago = modificadoresFinal
+            }
+            
+            // Aplica los cambios en toda la aplicacion
+            cargarModificadores()
             cargarSeccionCaja()
             cargarBotonesVentaPublico()
         }
@@ -87,7 +145,7 @@ const botonesActivarMetodo=()=>{
     })
 }
 
-const asignarBotonAgregarMetodo=()=>{
+const botonAgregarMetodo=()=>{
     /* Crea el boton para agregar metodos de pago */
     const contendorMetodos = document.getElementById('configuracion__caja__metodos')!
     const botonAgregarMetodo = document.getElementById('configuracion__caja__metodos-agregar')!
@@ -159,6 +217,81 @@ const asignarBotonAgregarMetodo=()=>{
         }
         nuevoMetodo.appendChild(botonConfirmar)
         contendorMetodos.appendChild(nuevoMetodo)
+
+    }
+}
+
+const botonAgregarModificador=()=>{
+    /* Crea el boton para agregar modificadores */
+    const contendorMod = document.getElementById('configuracion__caja__mod')!
+    const botonAgregarMod = document.getElementById('configuracion__caja__mod-agregar')!
+    
+    botonAgregarMod.onclick=()=>{
+        botonAgregarMod.classList.add('noActivo') // Desactiva el boton para agregar mas modificadores
+        const nuevoMod = document.createElement('div')
+        nuevoMod.className="configuracion__caja__mod-fila"
+        nuevoMod.innerHTML=`
+        <input class="configuracion__caja__mod-nombre inputRegistener2">
+        <input type="Number" class="configuracion__caja__mod-tipo inputRegistener2">
+        <div class="configuracion__caja__mod-textoError letra__enError"></div>
+        `
+
+        // Crea el boton para confirmar el nuevo modificador
+        const botonConfirmar = document.createElement('button')
+        botonConfirmar.className="configuracion__caja__mod-confirmar boton__activo botonRegistener3"
+        botonConfirmar.innerHTML=`<i class="fa-solid fa-check"></i>`
+        botonConfirmar.onclick=async ()=>{
+            // Obtiene los contenedores
+            const inputNombre = (botonConfirmar.parentElement!.querySelector(".configuracion__caja__mod-nombre") as HTMLInputElement)!
+            const inputValor = (botonConfirmar.parentElement!.querySelector(".configuracion__caja__mod-tipo") as HTMLSelectElement)!
+            const textoError = botonConfirmar.parentElement!.querySelector('.letra__enError')!
+            
+            // Elimina los estados de error previos
+            inputNombre.classList.remove('boton__enError')
+            inputValor.classList.remove('boton__enError')
+            textoError.textContent=''
+
+            // Realiza verificaciones
+            if(!inputNombre.value){ // Verifica que se haya ingresado algun valor
+                inputNombre.classList.add('boton__enError')
+                textoError.textContent='El nombre para el modificador es obligatorio'
+                return
+            } else { // Verifica que el nombre sea unico
+                const index = usuarioInformacion!.preferencias.modificacionesPago.findIndex((modificador)=> modificador.startsWith(inputNombre.value))
+                if(index !== -1) {
+                    textoError.textContent='El nombre ya existe'
+                    return
+                }
+            }
+            if(!inputValor.value){ // Verifica que se haya ingresado algun valor
+                inputValor.classList.add('boton__enError')
+                textoError.textContent='El valor es obligatorio'
+                return
+            }
+
+            // Obtiene los modificadores de pago por valor y lo modifica
+            const modificadoresFinal = usuarioInformacion!.preferencias.modificacionesPago
+            modificadoresFinal.push(`${inputNombre.value}&${inputValor.value}`)
+
+            // Envia el array de modificadores actualizado para actualizarlo en la base de datos
+            const formData = new FormData()
+            formData.append('modificacionesPagoString',JSON.stringify(modificadoresFinal))
+            const respuesta = await solicitudActualizarUsuario(formData) 
+            
+            // Si hay un error le da aviso al usuario
+            if(respuesta.errors.length>0){ 
+                mostrarMensaje("Hubo un error",true)
+                return
+            }
+
+            // Aplica los cambios en toda la aplicacion
+            usuarioInformacion!.preferencias.modificacionesPago = modificadoresFinal
+            cargarModificadores()
+            cargarSeccionCaja()
+            cargarBotonesVentaPublico()
+        }
+        nuevoMod.appendChild(botonConfirmar)
+        contendorMod.appendChild(nuevoMod)
 
     }
 }

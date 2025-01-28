@@ -10,8 +10,8 @@ export const buscarCargarCategorias = async(contenedor:HTMLElement|null=null,con
     const categorias = await obtenerCategorias()
     if(categorias.length>0){ // Si el servidor devuelve al menos una categoria
         if(contenedor)          cargarCategorias(categorias,contenedor)                         // Si se paso un contenedor como argumento entonces llama a la funcion para cargar las categorias en el DOM
-        if(contenedorOpciones)  cargarCategoriasVentanaModificar(categorias,contenedorOpciones) // Si se paso un contenedor del tipo "select" entonces le agrega como opciones las categorias encontradas
     }
+    if(contenedorOpciones)  cargarCategoriasVentanaModificar(categorias,contenedorOpciones) // Si se paso un contenedor del tipo "select" entonces le agrega como opciones las categorias encontradas y le da funcion a la option "Agregar categorias"
 
     return categorias
 }
@@ -77,12 +77,11 @@ const esCategoriaActiva = (categoria:string):boolean=>{
 }
 
 const cargarCategoriasVentanaModificar =(categorias:CategoriaI[],contenedorOpciones:HTMLSelectElement)=>{
-
     const nombresCategorias:string[] = categorias.map(categoria => categoria.nombre)
 
     // Carga las categorias dentro del selector de la ventana emergente para crear o modificar un producto
     contenedorOpciones.innerHTML='' // Reinicia el contenedor
-    let opcionesHTML:string =''
+    let opcionesHTML:string ='<option selected disabled>Seleccione una categoria</option>'
 
     nombresCategorias.forEach(categoria=>{
         opcionesHTML=opcionesHTML + `<option>${categoria}</option>`
@@ -94,7 +93,6 @@ const cargarCategoriasVentanaModificar =(categorias:CategoriaI[],contenedorOpcio
     const inputAgregarCategoria = document.getElementById('ventana__modProd__caracteristicas__input__categoria')! as HTMLInputElement
     contenedorOpciones.onclick = ()=>{
         const categoriaSeleccionada:string = contenedorOpciones.value
-
         if(categoriaSeleccionada==='Agregar Categoria'){
             // Si el usuario selecciona el boton "agregar categoria" muestra el input para ingresar una nueva categoria
             inputAgregarCategoria.classList.remove('noActivo')

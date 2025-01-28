@@ -21,11 +21,11 @@ import {
 // Verificaciones con la base de datos
 import {
     categoriaValida 
-} from '../../database/categoriasVerificaciones.js';
+} from '../database/categoriasVerificaciones.js';
 
 import {
     productoExiste
-} from '../../database/productosVerificaciones.js';
+} from '../database/productosVerificaciones.js';
 
 
 const router = express.Router();
@@ -45,8 +45,7 @@ router.post('/', // Crear producto - Admin
     check('nombre', 'El nombre es obligatorio').notEmpty(),
     check('marca', 'La marca es obligatoria').notEmpty(),
     check('modelo', 'El modelo es obligatorio').notEmpty(),
-    check('categoria', 'La categoria es obligatoria').notEmpty(),
-    check('categoria').custom(categoriaValida),
+    check('categoria').optional().custom(categoriaValida),
     validarCampos,
     crearProducto) 
 

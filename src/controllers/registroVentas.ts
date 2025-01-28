@@ -46,7 +46,7 @@ export const registrarVenta = async(req: Request, res: Response) =>{
         if(metodo2) data.metodo2=metodo2
         if(lugarVenta) data.lugarVenta=lugarVenta
         data.descuento=descuento||0;
-        data.descuentoNombre=descuentoNombre||'Descuento sin nombre'
+        data.descuentoNombre=descuentoNombre||''
         if(promocion) data.promocion=promocion
         if(observacion) data.observacion=observacion
         if(cliente) data.cliente=cliente

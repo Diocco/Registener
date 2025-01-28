@@ -11,7 +11,6 @@ const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo
 // Crear la ventana de Electron
 let mainWindow: BrowserWindow | null = null;
 
-console.log(path.join(__dirname, '../../images/icon.ico'))
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280, // Resolución de lanzamiento (ancho)
@@ -24,6 +23,8 @@ function createWindow() {
       contextIsolation: true,  // Mantener el contexto aislado
     },
   });
+
+  mainWindow.webContents.openDevTools();
 
   // Cargar la URL del servidor Express
   mainWindow.loadURL('http://localhost:8080');

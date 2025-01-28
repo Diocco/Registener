@@ -160,7 +160,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Si no existe un toquen de acceso entonces envia al usuario al inicio de sesion
     if(!tokenAcceso) { 
         activarVentanaIniciarSesion()
-        console.log("No hay token")
         return
     }
 
@@ -184,7 +183,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Si el usuario no tiene los permisos necesarios entonces lo devuelve al inicio de la pagina
     if(usuarioInformacion.rol!=='admin') {
         localStorage.setItem('mostrarMensajeError',"Usted no posee los permisos necesarios") // Define un mensaje de error para que sea mostrado al usuario una vez que carge la pagina a la que se redirige
-        window.location.assign(url+'/') // Redirije al usuario al inicio de sesion
+        localStorage.removeItem('tokenAcceso') // Elimina la sesion iniciada
+        window.location.reload() // Recarga la pagina
     }
 
     // Si se obtuvieron los metodos de pago carga la seccion de caja

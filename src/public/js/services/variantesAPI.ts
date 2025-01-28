@@ -132,7 +132,6 @@ export const verVariantes = async(productoId:ObjectId)=>{
 
 export const aplicarVenta = async(carrito:ElementoCarritoI[])=>{
 
-
     // Recibe como parametro el carrito y lo envia al servidor
     let respuesta:number|undefined
     await fetch(urlVariantes+`/venta`, { 

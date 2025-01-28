@@ -1,5 +1,5 @@
-import { RegistroVentaI } from "../src/models/interfaces/registroVentas.js";
-import VentaRegistro from "../src/models/registroVenta.js";
+import { RegistroVentaI } from "../models/interfaces/registroVentas.js";
+import VentaRegistro from "../models/registroVenta.js";
 
 // Verifica que el producto exista
 export const registroVentaExiste = async(registroVentaID:string) =>{

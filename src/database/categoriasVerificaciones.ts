@@ -1,4 +1,4 @@
-import Categoria from "../src/models/categoria.js";
+import Categoria from "../models/categoria.js";
 
 // Verifica si la categoria existe mediante su id
 const categoriaExiste = async(id:string) =>{

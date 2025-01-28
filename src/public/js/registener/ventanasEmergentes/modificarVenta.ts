@@ -1,8 +1,13 @@
 import { ElementoCarritoI } from "../../../../interfaces/elementoCarrito.js"
 import { RegistroVentaI } from "../../../../models/interfaces/registroVentas.js"
 import { convertirAInput } from "../../helpers/convertirElemento.js"
+import { formatearPrecio } from "../../helpers/formatearPrecio.js"
 import { modificarRegistro, obtenerRegistro } from "../../services/registroVentasAPI.js"
 import { cargarRegistrosVentaDOM } from "../registroVentas.js"
+
+
+const contenedorPago1 = document.getElementById('modificarVenta__infoPago__pago1')! as HTMLInputElement 
+const contenedorPago2 = document.getElementById('modificarVenta__infoPago__pago2')! as HTMLInputElement 
 
 export const ventanaModificarVenta =async (IDVenta:string)=>{
     const registro = await obtenerRegistro(IDVenta)
@@ -170,8 +175,6 @@ const calcularTotal=()=> {
     document.getElementById('modificarVenta__infoPago__total')!.textContent= `$ ${(total).toLocaleString('es-AR')}`
     
     // Verifica que el pago realizado sea igual al total
-    const contenedorPago1 = document.getElementById('modificarVenta__infoPago__pago1')! as HTMLInputElement 
-    const contenedorPago2 = document.getElementById('modificarVenta__infoPago__pago2')! as HTMLInputElement 
     const pago1 = Number(contenedorPago1!.value)||0
     const pago2 = Number(contenedorPago2!.value)||0
 

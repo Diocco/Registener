@@ -72,7 +72,7 @@
 .registroVentas__fila{
     display: grid;
     align-items: center;
-    grid-template-columns: 205px 175px 125px 150px 110px 150px minmax(200px,10000px) 40px 40px;
+    grid-template-columns: 205px 175px 125px 150px 110px 150px minmax(120px,10000px) 40px 40px;
     padding: 0.25% 0.5%;
 }
 .registroVentas__fila:nth-child(odd) { /*Filas impares*/

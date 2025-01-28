@@ -2,8 +2,8 @@ import express from 'express'; // Express
 import { validarRolJWT,validarJWT, validarCampos } from '../middlewares/index.js';
 import { check } from 'express-validator';
 import { eliminarRegistroVenta, modificarRegistro, registrarVenta, verRegistro, verRegistroVentas } from '../controllers/registroVentas.js';
-import { registroVentaExiste } from '../../database/registroVentaVerificaciones.js';
-import { mediosDePagoValido } from '../../database/registroCajaVerificaciones.js';
+import { registroVentaExiste } from '../database/registroVentaVerificaciones.js';
+import { mediosDePagoValido } from '../database/registroCajaVerificaciones.js';
 import { registrarCierreCaja, verRegistroCaja } from '../controllers/registroCaja.js';
 
 const router = express.Router();
