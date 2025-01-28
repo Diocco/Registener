@@ -4,8 +4,7 @@ import Usuario from '../models/usuario.js';
 
 export const validarJWT = async(req: Request, res: Response,next:NextFunction)=>{
 
-    // const secretOrPrivateKey = process.env.SECRETORPRIVATEKEY as string // Clave para la encriptacion
-    const secretOrPrivateKey = "b0c4e1m4sgr@nd3!!"  // Clave para la encriptacion
+    const secretOrPrivateKey = process.env.SECRETORPRIVATEKEY as string // Clave para la encriptacion
 
     const token = req.header('tokenAcceso') // Obtiene el JWT de los headers de la solicitud
 

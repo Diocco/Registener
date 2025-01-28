@@ -58,12 +58,10 @@ class Server {
         this.conexionConServidor = '/api/conexion';
         
         this.app = express(); // Instancia de Express
-        this.port = 8080; // Puerto con valor predeterminado
+        this.port = process.env.PORT || 8080; // Puerto con valor predeterminado
         this.configureMiddleware();
         this.routes(); // Configura las rutas
     }
-
-    async conectarDB(){ await mongoose.connect("mongodb+srv://diegoiocco13:%40Fpfjbzx13@embike.s5mdo.mongodb.net/alfredo"); } // Esta linea es para que haya una conexion con los endpoits sin estar en la aplicacion, esta linea debe eliminarse en modo produccion
 
 
     // Configura middleware globalnpm
@@ -71,9 +69,6 @@ class Server {
 
         // Aplica las opciones de CORS a todas las rutas
         this.app.use(cors());
-
-        // Servir archivos estáticos
-        this.app.use(express.static(path.resolve(__dirname, '../../src/public')));
 
         // Parseo de JSON
         this.app.use(express.json());

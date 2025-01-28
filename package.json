@@ -1,11 +1,12 @@
 {
   "name": "registener",
   "version": "1.0.0",
-  "main": "src/public/index.js",
+  "main": "app.js",
   "scripts": {
     "postinstall": "tsc",
     "startdev": "tsc && electron .",
-    "dist": "npm run build & electron-builder"
+    "dist": "npm run build & electron-builder",
+    "start": "tsc && node app.js"
   },
   "dist": {
     "appId": "com.registener",
