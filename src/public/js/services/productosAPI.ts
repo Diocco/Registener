@@ -1,10 +1,10 @@
 
 import { ObjectId } from "mongoose";
 import { error } from "../../../interfaces/error.js";
-import { producto } from "../../../models/interfaces/producto.js";
+import { producto } from "../../../interfaces/producto.js";
 import { mostrarErroresConsola, tokenAcceso, urlCategorias, urlProductos } from "../global.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
-import { CategoriaI } from "../../../models/interfaces/categorias.js";
+import { CategoriaI } from "../../../interfaces/categorias.js";
 
 
 

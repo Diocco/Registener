@@ -1,5 +1,5 @@
-import { producto } from "../../../models/interfaces/producto.js";
-import { variante } from "../../../models/interfaces/variante.js";
+import { producto } from "../../../interfaces/producto.js";
+import { variante } from "../../../interfaces/variante.js";
 
 export const agregarProductosDOM = (productos:producto[],contenedorProductos:HTMLElement) => {
 

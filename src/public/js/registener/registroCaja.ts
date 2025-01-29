@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { RegistroCajaI } from "../../../models/interfaces/registroCaja.js";
+import { RegistroCajaI } from "../../../interfaces/registroCaja.js";
 import { cargarPaginadoRegistros } from "../helpers/paginadoRegistros.js";
 import { solicitudObtenerRegistrosCaja } from "../services/registroCajaAPI.js";
 import { obtenerFechaActual } from "../helpers/formatearFecha.js";

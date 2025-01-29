@@ -1,7 +1,7 @@
 
 import { ObjectId } from "mongoose"
-import { CategoriaI } from "../../../models/interfaces/categorias.js"
-import { producto } from "../../../models/interfaces/producto.js"
+import { CategoriaI } from "../../../interfaces/categorias.js"
+import { producto } from "../../../interfaces/producto.js"
 import { buscarCargarCategorias } from "../helpers/categorias.js"
 import { obtenerProductos, solicitudEliminarProducto } from "../services/productosAPI.js"
 import { agregarProductosDOM, alternarDisponibilidadProducto } from "./productos.js"
@@ -9,13 +9,12 @@ import { cargarVentanaModificarProducto, ventanaEmergenteModificarProducto } fro
 import { preguntar } from "./ventanasEmergentes/preguntar.js"
 
 import { tokenAcceso, url, usuarioVerificado } from "../global.js"
-import { usuario } from "../../../models/interfaces/usuario.js"
+import { usuario } from "../../../interfaces/usuario.js"
 import { cargarBotonesVentaPublico, cargarVentaPublico } from "./ventaPublico.js"
 import { cargarRegistrosVentaDOM } from "./registroVentas.js"
 import { actualizarIngresos, cargarSeccionCaja } from "./seccionCaja.js"
 import { conexionConServidor } from "../services/conexionAPI.js"
-import { MetodoPagoI } from "../../../models/interfaces/metodosPago.js"
-import { verMetodosPago } from '../../../controllers/metodosPago';
+import { MetodoPagoI } from "../../../interfaces/metodosPago.js"
 import { solicitudObtenerMetodosPago } from "../services/metodosPagoAPI.js"
 import { cambiarTema, cargarSeccionConfiguracion } from "./configuracion.js"
 import { cargarSeccionRegistros } from "./registros.js"

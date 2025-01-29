@@ -1,6 +1,6 @@
 
-import { producto } from "../../../models/interfaces/producto.js";
-import { variante } from "../../../models/interfaces/variante.js";
+import { producto } from "../../../interfaces/producto.js";
+import { variante } from "../../../interfaces/variante.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 import { actualizarProducto } from "../services/productosAPI.js";
 

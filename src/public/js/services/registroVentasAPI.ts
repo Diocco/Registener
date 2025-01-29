@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import { RegistroVentaI } from "../../../models/interfaces/registroVentas.js"
+import { RegistroVentaI } from "../../../interfaces/registroVentas.js"
 import { mostrarErroresConsola, tokenAcceso, urlRegistroVentas } from "../global.js"
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js"
-import { variante } from "../../../models/interfaces/variante.js"
+import { variante } from "../../../interfaces/variante.js"
 import { ElementoCarritoI } from "../../../interfaces/elementoCarrito.js"
 
 

@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose"
-import { variante } from "../../../models/interfaces/variante.js"
+import { variante } from "../../../interfaces/variante.js"
 import { mostrarErroresConsola, tokenAcceso, urlVariantes } from "../global.js"
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js"
 import { error } from "../../../interfaces/error.js"

@@ -1,5 +1,5 @@
 import { metodosPago, usuarioInformacion } from "../registener/index.js";
-import { MetodoPagoI } from "../../../models/interfaces/metodosPago.js";
+import { MetodoPagoI } from "../../../interfaces/metodosPago.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 import { solicitudActivarMedioPago, solicitudCrearMetodoPago, solicitudEliminarMedioPago, solicitudObtenerMetodosPago } from "../services/metodosPagoAPI.js";
 import { cargarSeccionCaja } from "./seccionCaja.js";

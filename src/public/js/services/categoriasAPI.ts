@@ -1,4 +1,4 @@
-import { CategoriaI } from "../../../models/interfaces/categorias.js";
+import { CategoriaI } from "../../../interfaces/categorias.js";
 import { mostrarErroresConsola, tokenAcceso, urlCategorias } from "../global.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 

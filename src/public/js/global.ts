@@ -1,5 +1,5 @@
 import { error } from "../../interfaces/error.js";
-import { usuario } from "../../models/interfaces/usuario.js";
+import { usuario } from "../../interfaces/usuario.js";
 import { mostrarMensaje } from "./helpers/mostrarMensaje.js";
 import { obtenerUsuarioVerificado } from "./services/usuariosAPI.js";
 

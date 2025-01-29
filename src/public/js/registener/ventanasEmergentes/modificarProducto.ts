@@ -1,4 +1,4 @@
-import { EspecificacionI, producto } from "../../../../models/interfaces/producto.js";
+import { EspecificacionI, producto } from "../../../../interfaces/producto.js";
 
 
 import { ventanaEmergenteCargarImagenProducto } from "./modificarFoto.js";
@@ -6,7 +6,7 @@ import { actualizarProducto, crearProducto, solicitudEliminarProducto } from "..
 import { buscarCargarProductos, categorias, usuarioInformacion } from "../index.js";
 
 
-import { variante } from "../../../../models/interfaces/variante.js";
+import { variante } from "../../../../interfaces/variante.js";
 import { actualizarVariantes, crearVariante, eliminarVariante } from "../../services/variantesAPI.js";
 import { solicitudAgregarCategoria } from "../../services/categoriasAPI.js";
 import { buscarCargarCategorias } from "../../helpers/categorias.js";

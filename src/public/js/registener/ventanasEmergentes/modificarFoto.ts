@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { producto } from "../../../../models/interfaces/producto.js";
+import { producto } from "../../../../interfaces/producto.js";
 import { tokenAcceso, urlProductos } from "../../global.js";
 import { mostrarMensaje } from "../../helpers/mostrarMensaje.js";
 import { agregarImagenesDOM } from "./modificarProducto.js";

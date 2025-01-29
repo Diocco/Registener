@@ -1,6 +1,6 @@
 import { error } from "../../../interfaces/error.js";
-import { producto } from "../../../models/interfaces/producto.js";
-import { usuario } from "../../../models/interfaces/usuario.js";
+import { producto } from "../../../interfaces/producto.js";
+import { usuario } from "../../../interfaces/usuario.js";
 import { mostrarErroresConsola, tokenAcceso, url, urlInicioSesion, urlRegistro } from "../global.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 

@@ -1,5 +1,5 @@
 import { error } from "../../../interfaces/error.js"
-import { MetodoPagoI } from "../../../models/interfaces/metodosPago.js"
+import { MetodoPagoI } from "../../../interfaces/metodosPago.js"
 import { mostrarErroresConsola, tokenAcceso, urlMetodoPago } from "../global.js"
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js"
 

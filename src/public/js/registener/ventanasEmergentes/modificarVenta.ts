@@ -1,5 +1,5 @@
 import { ElementoCarritoI } from "../../../../interfaces/elementoCarrito.js"
-import { RegistroVentaI } from "../../../../models/interfaces/registroVentas.js"
+import { RegistroVentaI } from "../../../../interfaces/registroVentas.js"
 import { convertirAInput } from "../../helpers/convertirElemento.js"
 import { formatearPrecio } from "../../helpers/formatearPrecio.js"
 import { modificarRegistro, obtenerRegistro } from "../../services/registroVentasAPI.js"

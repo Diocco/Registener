@@ -1,8 +1,8 @@
 
 // Interfaces
-import { CategoriaI } from "../../../models/interfaces/categorias.js"
-import { producto } from "../../../models/interfaces/producto.js"
-import { variante } from "../../../models/interfaces/variante.js"
+import { CategoriaI } from "../../../interfaces/categorias.js"
+import { producto } from "../../../interfaces/producto.js"
+import { variante } from "../../../interfaces/variante.js"
 
 // Servicios
 import { obtenerProductos } from "../services/productosAPI.js"

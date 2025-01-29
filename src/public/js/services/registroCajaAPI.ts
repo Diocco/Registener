@@ -1,4 +1,4 @@
-import { MediosDePagoI, RegistroCajaI } from "../../../models/interfaces/registroCaja.js"
+import { MediosDePagoI, RegistroCajaI } from "../../../interfaces/registroCaja.js"
 import { mostrarErroresConsola, tokenAcceso, urlRegistroCaja } from "../global.js"
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js"
 

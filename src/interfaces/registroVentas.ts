@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ElementoCarritoI } from "../../interfaces/elementoCarrito";
+import { ElementoCarritoI } from "./elementoCarrito.js";
 
 
 export interface RegistroVentaI{

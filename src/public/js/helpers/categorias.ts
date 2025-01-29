@@ -1,5 +1,5 @@
 
-import { CategoriaI } from "../../../models/interfaces/categorias.js";
+import { CategoriaI } from "../../../interfaces/categorias.js";
 import { buscarCargarProductos } from "../registener/index.js";
 import { obtenerCategorias } from "../services/categoriasAPI.js";
 

@@ -1,6 +1,6 @@
-import mongoose, { ObjectId } from "mongoose"
-import { CategoriaI } from "./categorias"
-import { variante } from "./variante"
+import mongoose from "mongoose"
+import { CategoriaI } from "./categorias.js"
+import { variante } from "./variante.js"
 
 export interface producto {
     _id:mongoose.Schema.Types.ObjectId,
