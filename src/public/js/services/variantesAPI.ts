@@ -115,7 +115,8 @@ export const verVariantes = async(productoId:ObjectId)=>{
     // Envia el id del producto y el servidor devuelve todas las variantes para ese producto
     await fetch(urlVariantes+`/${productoId.toString()}`, { 
         method: 'GET',
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json' ,
+            'tokenAcceso' : `${tokenAcceso}`  },
     })
     .then(response => response.json()) // Parsear la respuesta como JSON
     .then(data=> { // Si todo sale bien se maneja la respuesta del servidor

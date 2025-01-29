@@ -70,3 +70,8 @@
     grid-column: 1 / 4;
     font-size: 16px;
 }
+
+/* Boton para cerrar sesion */
+#configuracion__sesion-button{
+    width: 100%;
+}

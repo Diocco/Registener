@@ -41,7 +41,8 @@ export const solicitudIniciarSesion =async(correo:string,password:string)=>{
     try {
         await fetch(urlInicioSesion, { // Realiza el post
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' ,
+                'tokenAcceso' : `${tokenAcceso}`  },
             body: JSON.stringify(data) // Convertir los datos a JSON
         })
     
@@ -82,7 +83,8 @@ export const solicitudRegistrarUsuario=async (nombre:string,password:string,corr
 
     await fetch(urlRegistro, { // Realiza el post
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+            'tokenAcceso' : `${tokenAcceso}`  },
         body: JSON.stringify(data) // Convertir los datos a JSON
     })
     .then(response => response.json()) // Parsear la respuesta como JSON

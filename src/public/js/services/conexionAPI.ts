@@ -1,4 +1,4 @@
-import { urlConexionConServidor } from "../global.js";
+import { tokenAcceso, urlConexionConServidor } from "../global.js";
 import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 
 export const conexionConServidor =async()=>{
@@ -8,7 +8,8 @@ export const conexionConServidor =async()=>{
     await fetch(
         urlConexionConServidor , { 
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+                    'tokenAcceso' : `${tokenAcceso}`  },
     })
     .then(response => response.json()) // Parsear la respuesta como JSON
     .then(data=> { // Maneja la respuesta del servidor

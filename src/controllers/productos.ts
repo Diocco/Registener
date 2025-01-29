@@ -11,8 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 // Directorio
 import path from 'path';
 import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
-const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
+// const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
+// const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
 import fs from 'fs'
 import { error } from '../interfaces/error.js';
 
