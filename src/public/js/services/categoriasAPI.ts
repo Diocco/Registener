@@ -9,7 +9,8 @@ export const obtenerCategorias =async()=>{
     await fetch(
         urlCategorias , { 
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+            'tokenAcceso' : `${tokenAcceso}`  },
     })
     .then(response => response.json()) // Parsear la respuesta como JSON
     .then(data=> { // Maneja la respuesta del servidor

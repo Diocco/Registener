@@ -22,7 +22,8 @@ export const obtenerProductos=async(desde:string='',cantidadElementos:string='',
     }
     await fetch(urlProductos+`?variantes=true&desde=${desde}&cantidadElementos=${cantidadElementos}&precioMin=${precioMin}&precioMax=${precioMax}&palabraBuscada=${palabraBuscada}&categorias=${categorias}&ordenar=${ordenar}&categoriasNombre=${categoriasNombre}&SKUBuscado=${SKUBuscado}&pagina=${pagina}`, { 
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json'  ,
+            'tokenAcceso' : `${tokenAcceso}`  },
     })
     .then(response => response.json()) // Parsear la respuesta como JSON
     .then(data=> { // Maneja la respuesta del servidor
@@ -48,7 +49,8 @@ export const buscarCategoriasValidas=async()=>{
     await fetch(
         urlCategorias+`?nombres=true`, { // Realiza la peticion GET para obtener un string[] con los nombres de las categorias validas
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json'  ,
+            'tokenAcceso' : `${tokenAcceso}`  },
     })
     .then(response => response.json()) // Parsear la respuesta como JSON
     .then(data=> { // Maneja la respuesta del servidor
@@ -136,7 +138,8 @@ export const obtenerProducto =async (productoId:string)=>{
     
     await fetch(urlProductos+`/${productoId}`, { 
         method: 'GET',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' ,
+            'tokenAcceso' : `${tokenAcceso}`  },
         })
     .then(response => response.json()) // Parsea la respuesta 
     .then(data=> { // Maneja la respuesta del servidor
