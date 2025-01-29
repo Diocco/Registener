@@ -6,12 +6,20 @@ import { cargarSeccionCaja } from "./seccionCaja.js";
 import { cargarBotonesVentaPublico } from "./ventaPublico.js";
 import { preguntar } from "./ventanasEmergentes/preguntar.js";
 import { solicitudActualizarUsuario } from "../services/usuariosAPI.js";
+import { cerrarSesion } from "../helpers/cerrarSesion.js";
 
 export const cargarSeccionConfiguracion=()=>{
     cargarMetodosPago()
     botonAgregarMetodo()
     cargarModificadores()
     botonAgregarModificador()
+    botonCerrarSesion()
+}
+
+/* Boton para cerrar la sesion */
+const botonCerrarSesion=()=>{
+    const boton = document.getElementById('configuracion__sesion-button')! as HTMLButtonElement
+    boton.onclick=()=>cerrarSesion()
 }
 
 /* Configuracion de los metodos de pago */

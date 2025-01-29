@@ -2,9 +2,9 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Directorio
-const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
-const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
+// // Directorio
+// const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
+// const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
 
 // Crear la ventana de Electron
 let mainWindow: BrowserWindow | null = null;
@@ -15,7 +15,7 @@ function createWindow() {
     height: 720, // Resolución de lanzamiento (alto)
     minWidth: 1024,
     minHeight: 768,
-    icon: path.join(__dirname, '../images/icon.ico'), // Ruta del icono
+    // icon: path.join(__dirname, '../images/icon.ico'), // Ruta del icono
     webPreferences: {
       nodeIntegration: false, // No habilitar la integración de Node.js en el frontend
       contextIsolation: true,  // Mantener el contexto aislado
