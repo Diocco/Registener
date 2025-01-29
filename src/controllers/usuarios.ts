@@ -14,8 +14,8 @@ import path from 'path';
 import { fileURLToPath } from 'url'
 import { usuario } from '../models/interfaces/usuario.js';
 import { error } from '../interfaces/error.js';
-const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
-const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
+// const __filename = fileURLToPath(import.meta.url); // Obtiene el nombre del archivo actual
+// const __dirname = path.dirname(__filename); // Obtiene el directorio del archivo actual
 
 
 const agregarUsuario = async(req: Request, res: Response) => {

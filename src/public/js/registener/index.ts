@@ -19,6 +19,7 @@ import { verMetodosPago } from '../../../controllers/metodosPago';
 import { solicitudObtenerMetodosPago } from "../services/metodosPagoAPI.js"
 import { cambiarTema, cargarSeccionConfiguracion } from "./configuracion.js"
 import { cargarSeccionRegistros } from "./registros.js"
+import { cerrarSesion } from "../helpers/cerrarSesion.js"
 
 
 // Cambia el tema de la aplicacion
@@ -178,8 +179,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Si el usuario no tiene los permisos necesarios entonces lo devuelve al inicio de la pagina
     if(usuarioInformacion.rol!=='admin') {
         localStorage.setItem('mostrarMensajeError',"Usted no posee los permisos necesarios") // Define un mensaje de error para que sea mostrado al usuario una vez que carge la pagina a la que se redirige
-        localStorage.removeItem('tokenAcceso') // Elimina la sesion iniciada
-        window.location.reload() // Recarga la pagina
+        cerrarSesion()
     }
 
     // Si se obtuvieron los metodos de pago carga la seccion de caja
