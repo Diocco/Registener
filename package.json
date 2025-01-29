@@ -19,7 +19,7 @@
       "icon": "icon.ico"
     }
   },
-  "type": "commonjs",
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
