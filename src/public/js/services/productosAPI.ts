@@ -1,5 +1,4 @@
 
-import { ObjectId } from "mongoose";
 import { error } from "../../../interfaces/error.js";
 import { producto } from "../../../interfaces/producto.js";
 import { mostrarErroresConsola, tokenAcceso, urlCategorias, urlProductos } from "../global.js";
@@ -7,7 +6,25 @@ import { mostrarMensaje } from "../helpers/mostrarMensaje.js";
 import { CategoriaI } from "../../../interfaces/categorias.js";
 
 
+// Solicita una imagen al servidor teniendo como argumento el id de la imagen
+export const solicitudObtenerImagen=async (idImagen:string)=>{
+    let imagen:string=""
 
+    await fetch(urlProductos+`/imagen/`+idImagen, { 
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'}
+    })
+    .then(response => response.blob()) // Parsear la respuesta como JSON
+    .then(blob=> { // Maneja la respuesta del servidor
+        imagen = URL.createObjectURL(blob)
+    })
+    .catch(error => { // Si hay un error se manejan y se muestra en consola
+        mostrarMensaje('2',true);
+        console.error(error);
+    })
+
+    return imagen
+}
 
 // Realiza la peticion GET para obtener los productos
 export const obtenerProductos=async(desde:string='',cantidadElementos:string='',precioMin:string='',precioMax:string='',palabraBuscada:string='',categorias:string='',ordenar:string='',categoriasNombre:string='',SKUBuscado:string='',pagina:string='')=>{
@@ -41,7 +58,6 @@ export const obtenerProductos=async(desde:string='',cantidadElementos:string='',
 
     return respuesta
 }
-
 
 // Carga las categorias validas en el DOM
 export const buscarCategoriasValidas=async()=>{

@@ -101,9 +101,8 @@
 
 /*Input para subir una nueva imagen en la ventana emergente*/
 #ventana__cargarFoto-input{
-    width: 176px;
-    margin: 0 100%;
-    padding: 5px;
+    width: 175px;
+    margin: 10px 50px;
 }
 
 

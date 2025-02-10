@@ -2,7 +2,7 @@ import { EspecificacionI, producto } from "../../../../interfaces/producto.js";
 
 
 import { ventanaEmergenteCargarImagenProducto } from "./modificarFoto.js";
-import { actualizarProducto, crearProducto, solicitudEliminarProducto } from "../../services/productosAPI.js";
+import { actualizarProducto, crearProducto, solicitudEliminarProducto, solicitudObtenerImagen } from "../../services/productosAPI.js";
 import { buscarCargarProductos, categorias, usuarioInformacion } from "../index.js";
 
 
@@ -10,6 +10,7 @@ import { variante } from "../../../../interfaces/variante.js";
 import { actualizarVariantes, crearVariante, eliminarVariante } from "../../services/variantesAPI.js";
 import { solicitudAgregarCategoria } from "../../services/categoriasAPI.js";
 import { buscarCargarCategorias } from "../../helpers/categorias.js";
+import { obtenerFormatoImagen } from "../../helpers/obtenerFormatoImagen.js";
 
 // Contenedores de categorias
 const contenedorCategorias:HTMLElement = document.getElementById('configProductos__categorias')!
@@ -42,11 +43,14 @@ const cancelar:HTMLElement = document.getElementById("ventana__modProd__cancelar
 const botonAgregarVariante = document.getElementById('ventana__modProd__modVar__agregarVariante')! as HTMLButtonElement
 const botonAgregarEspecificacion = document.getElementById('ventana__modProd__modEspecif__button')! as HTMLButtonElement
 
-
-
+// Variable de la ventana
+export let productoVentanaModificar:producto|undefined
 
 // Ventana general
 export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
+
+    // Define al producto pasado como parametro como variable de la ventana
+    productoVentanaModificar=producto
 
     // Elimina los estados de error previos, si existen
     contenedorVentanaEmergente.querySelectorAll('.boton__enError').forEach(botonEnError=>botonEnError.classList.remove('boton__enError'))
@@ -71,17 +75,17 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
 
     // Define la funcion del boton 
     let esCrearProducto=false
-    if(!producto) {
-        producto = await crearProducto() // Crea un nuevo producto
+    if(!productoVentanaModificar) {
+        productoVentanaModificar = await crearProducto() // Crea un nuevo producto
         esCrearProducto=true
     
     }; // Si a la funcion no se le pasa la informacion de un producto entonces crea uno nuevo
-    if(!producto) return // Si fallo la creacion del producto entonces resulta en un error fatal
+    if(!productoVentanaModificar) return // Si fallo la creacion del producto entonces resulta en un error fatal
 
-    cargarProductoDOM(producto) // Carga en el DOM toda la informacion del producto
-    cargarVariantesDOM(producto) // Carga la informacion de las variantes
-    cargarEspecificacionesDOM(producto) // Carga la informacion de las variantes
-    
+    cargarVariantesDOM() // Carga la informacion de las variantes
+    cargarEspecificacionesDOM() // Carga la informacion de las variantes
+    cargarProductoDOM() // Carga en el DOM toda la informacion del producto
+    agregarImagenesDOM(); // Carga las imagenes del producto en el DOM
 
     // Espera que el usuario aprete el boton "volver" antes de guardar todos los cambios, el bucle se repite hasta que el usuario introduzca todos los datos necesarios correctamente
     let nodosEnError:NodeListOf<HTMLInputElement>
@@ -92,7 +96,7 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
         await new Promise<void>((resolve) => {
             aceptar.onclick=()=>resolve();
             cancelar.onclick=async ()=>{
-                if(esCrearProducto) await solicitudEliminarProducto(producto._id.toString()) // Si la ventana es para crear un producto, entonces lo elimina de la base de datos
+                if(esCrearProducto) await solicitudEliminarProducto(productoVentanaModificar!._id.toString()) // Si la ventana es para crear un producto, entonces lo elimina de la base de datos
 
                 // Desactiva la ventana emergente
                 contenedorVentanaEmergente.classList.add('noActivo')
@@ -104,17 +108,18 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
 
         let datosFormulario = new FormData(formularioProducto) // Lee los datos introducidos por el usuario
 
-
         // Toma los datos del producto en el formulario
         const especificaciones:EspecificacionI[] = obtenerEspecificacionesDOM()
         datosFormulario.set('especificacionesJSON',JSON.stringify(especificaciones))
 
+        // Toma las imagen del producto
+        datosFormulario.set('imagenesJSON',JSON.stringify(productoVentanaModificar.imagenes))
 
         // Si los hay, elimina los estados de error en la ventana emergente
         contenedorVentanaEmergente.querySelectorAll('.boton__enError').forEach(contenedor=>contenedor.classList.remove('boton__enError')) 
 
         await Promise.all([
-            validarVariantesDOM(producto._id.toString()), // Verifica que las variantes ingresadas sean validas
+            validarVariantesDOM(productoVentanaModificar._id.toString()), // Verifica que las variantes ingresadas sean validas
             validarCaracteristicasDOM(datosFormulario) // Verifica que las caracteristicas del producto sean validas
         ])
 
@@ -123,7 +128,7 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
 
         // Si no hay errores envia la solicitud para modificar el usuario 
         if(nodosEnError.length<1) {
-            const respuesta = await actualizarProducto(datosFormulario,producto._id.toString()); // Actualiza los datos del producto en la base de datos
+            const respuesta = await actualizarProducto(datosFormulario,productoVentanaModificar._id.toString()); // Actualiza los datos del producto en la base de datos
             if(respuesta.errors.length>0){
                 respuesta.errors.forEach(error=>{
                     if(error.path==='nombre') nombre.classList.add('boton__enError')
@@ -154,33 +159,36 @@ export const ventanaEmergenteModificarProducto = async(producto?:producto) =>{
 
 
 // Informacion del producto
-export const agregarImagenesDOM = async(productoInformacion:producto)=>{
+export const agregarImagenesDOM = async()=>{
     // Imagen principal
-    let imagen = document.getElementById("ventana__modProd__fotoDescripcion__img")! as HTMLImageElement;
-    imagen.style.backgroundImage=''
-    imagen.style.backgroundImage = `url('${productoInformacion.imagenes[0]}')`;
+    let imagenHTML = document.getElementById("ventana__modProd__fotoDescripcion__img")! as HTMLImageElement;
+    const imagenBase64 = productoVentanaModificar!.imagenes[0] as string|undefined // Obtiene la primer imagen del producto en formato 64
+
+    if(imagenBase64){
+        // Determina cual es el formato original de la imagen
+        let formatoImagen = obtenerFormatoImagen(imagenBase64)
+        imagenHTML.src = `data:image/${formatoImagen};base64,${imagenBase64}` // Coloca la imagen del producto en el contenedor
+    }else{
+        imagenHTML.src = "../../images/sinfoto.png" // Vacia el contenedor de la imagen
+    }
 
     // Contenedor de las imagenes de la variante
     const contenedorImagenes = document.getElementById('ventana__modProd__caracteristicas__div-imagenes')!
     contenedorImagenes.innerHTML='' // Vacia el contenedor de imagenes
 
-    let contadorImagenes:number=1
     const fragmento = document.createDocumentFragment()
 
     // Agregar elementos que representan a las imagenes del producto
-    productoInformacion.imagenes.forEach(imagenURL =>{ // Agrega las imagenes a la variante
+    for (let i = 0; i < productoVentanaModificar!.imagenes.length; i++) {
         const imagenDIV = document.createElement('div')
-        imagenDIV.id=imagenURL
         imagenDIV.className="botonRegistener2"
-        imagenDIV.textContent=contadorImagenes.toString()
+        imagenDIV.textContent=(i+1).toString()
         imagenDIV.onclick=(event)=>{
             event.preventDefault()
-            ventanaEmergenteCargarImagenProducto(productoInformacion,imagenURL)
+            ventanaEmergenteCargarImagenProducto(i)
         }
-
-        contadorImagenes++
         fragmento.appendChild(imagenDIV)
-    })
+    }
 
     // Agrega un boton al final para agregar mas imagenes
     const botonAgregarImagen = document.createElement('button')
@@ -189,7 +197,7 @@ export const agregarImagenesDOM = async(productoInformacion:producto)=>{
     botonAgregarImagen.textContent="+"
     botonAgregarImagen.onclick=(event)=>{
         event.preventDefault()
-        ventanaEmergenteCargarImagenProducto(productoInformacion)
+        ventanaEmergenteCargarImagenProducto(-1)
     }
     fragmento.appendChild(botonAgregarImagen)
 
@@ -198,21 +206,18 @@ export const agregarImagenesDOM = async(productoInformacion:producto)=>{
 
 }
 
-const cargarProductoDOM =(producto:producto)=>{
-    const categoriaCompleta = categorias!.find(categoria=>categoria._id===producto.categoria)
+const cargarProductoDOM =()=>{
+    const categoriaCompleta = categorias!.find(categoria=>categoria._id===productoVentanaModificar!.categoria)
 
     // Coloca la informacion en los inputs correspondientes
-    id.value = producto._id.toString();
-    nombre.value = producto.nombre==="Sin nombre"?'':producto.nombre;
-    precio.value = `${producto.precio===0?'':producto.precio}`;
-    marca.value = producto.marca==="Sin marca"?'':producto.marca;
-    modelo.value = producto.modelo==="Sin modelo"?'':producto.modelo;
+    id.value = productoVentanaModificar!._id.toString();
+    nombre.value = productoVentanaModificar!.nombre==="Sin nombre"?'':productoVentanaModificar!.nombre;
+    precio.value = `${productoVentanaModificar!.precio===0?'':productoVentanaModificar!.precio}`;
+    marca.value = productoVentanaModificar!.marca==="Sin marca"?'':productoVentanaModificar!.marca;
+    modelo.value = productoVentanaModificar!.modelo==="Sin modelo"?'':productoVentanaModificar!.modelo;
     if(categoriaCompleta) categoria.value = categoriaCompleta.nombre
     else categoria.value = "Seleccione una categoria"
-    descripcion.textContent = producto.descripcion;
-
-    // Carga las imagenes del producto en el DOM
-    agregarImagenesDOM(producto);
+    descripcion.textContent = productoVentanaModificar!.descripcion;
 }
 
 const validarCaracteristicasDOM = async(datosFormulario:FormData)=>{
@@ -239,7 +244,7 @@ const validarCaracteristicasDOM = async(datosFormulario:FormData)=>{
 }
 
 // Variantes
-export const cargarVariantesDOM=async(productoInformacion:producto) =>{
+export const cargarVariantesDOM=async() =>{
 
 
     contenedorVariantes.innerHTML=''; // Vacia el contenedor con informacion previa
@@ -252,8 +257,8 @@ export const cargarVariantesDOM=async(productoInformacion:producto) =>{
     contenedorVariantes.appendChild(contenedorMensaje)
 
     // Carga las distintas variables del producto, si existen
-    if(productoInformacion.variantes.length>0){ // Carga las variantes del producto
-        (productoInformacion.variantes as variante[]).forEach(variante => {
+    if(productoVentanaModificar!.variantes.length>0){ // Carga las variantes del producto
+        (productoVentanaModificar!.variantes as variante[]).forEach(variante => {
             agregarVarianteDOM(contenedorVariantes,variante)
         });
         contenedorMensaje.className="noActivo" // Desactiva el mensaje de "sin variantes"
@@ -374,7 +379,7 @@ const validarVariantesDOM =async(productoId:string)=>{
 }
 
 // Especificaciones
-const cargarEspecificacionesDOM =(productoInformacion:producto)=>{
+const cargarEspecificacionesDOM =()=>{
     
     contenedorEspecificaciones.innerHTML=''; // Vacia el contenedor con informacion previa
 
@@ -385,8 +390,8 @@ const cargarEspecificacionesDOM =(productoInformacion:producto)=>{
     contenedorEspecificaciones.appendChild(contenedorMensaje)
     
     // Carga las distintas variables del producto, si existen
-    if(productoInformacion.especificaciones.length>0){ // Carga las variantes del producto
-        productoInformacion.especificaciones.forEach(especificacion => {
+    if(productoVentanaModificar!.especificaciones.length>0){ // Carga las variantes del producto
+        productoVentanaModificar!.especificaciones.forEach(especificacion => {
             agregarEspecificacionDOM(especificacion)
         });
         contenedorMensaje.className="noActivo" // Desactiva el mensaje de "sin especificaciones"
@@ -465,10 +470,9 @@ const asignaBotonAgregarVariante=()=>{
         event.preventDefault()
         contenedorVariantes.classList.remove('boton__enError') // Remueve el estado de error del contenedor de las variantes, si existe
         
-        const productoID = document.getElementById('ventana__modProd__caracteristicas__input__id')!.textContent! 
         // Crea una variable nueva con variables por default
         let varianteNueva:variante = {
-            producto: productoID,
+            producto: productoVentanaModificar!._id,
             color: '',
             talle: '',
             SKU: (new Date().getTime()).toString(), // Crea un SKU por default, el usuario luego puede definir uno diferente
